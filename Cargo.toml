@@ -1,0 +1,29 @@
+[package]
+name = "bad_north_save_modifier"
+version = "0.1.0"
+edition = "2021"
+authors = ["ABaLaQiYaShanMai"]
+description = "GUI-based save game modifier for Bad North using egui"
+
+[dependencies]
+eframe = "0.24"
+egui = "0.24"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+walkdir = "2.4"
+anyhow = "1.0"
+thiserror = "1.0"
+log = "0.4"
+env_logger = "0.11"
+which = "5.0"
+rfd = "0.14"
+winapi = { version = "0.3", features = ["winuser", "windef"] }
+
+[[bin]]
+name = "BadNorthSaveModifier"
+path = "src/main.rs"
+
+[profile.release]
+opt-level = 3
+lto = true
+strip = true
