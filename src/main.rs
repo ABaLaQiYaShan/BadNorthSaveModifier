@@ -20,21 +20,33 @@ use settings::{AppSettings, ColorMode, Language};
 fn configure_chinese_fonts(ctx: &egui::Context) {
     let mut fonts = egui::FontDefinitions::default();
 
-    #[cfg(has_emoji_font)]
-    fonts.font_data.insert(
-        "NotoColorEmoji".to_owned(),
-        egui::FontData::from_static(include_bytes!(
-            "../assets/fonts/NotoColorEmoji-Regular.ttf"
-        )),
-    );
+    // Load Chinese font from Windows system fonts at runtime (no embedded font files needed)
+    let chinese_font_candidates = [
+        r"C:\Windows\Fonts\msyh.ttc",   // Microsoft YaHei (微软雅黑)
+        r"C:\Windows\Fonts\msyh.ttf",   // Microsoft YaHei older variant
+        r"C:\Windows\Fonts\simsun.ttc", // SimSun fallback
+    ];
+    for path in &chinese_font_candidates {
+        if let Ok(data) = std::fs::read(path) {
+            fonts.font_data.insert(
+                "ChineseFont".to_owned(),
+                egui::FontData::from_owned(data),
+            );
+            fonts
+                .families
+                .entry(egui::FontFamily::Proportional)
+                .or_default()
+                .push("ChineseFont".to_owned());
+            fonts
+                .families
+                .entry(egui::FontFamily::Monospace)
+                .or_default()
+                .push("ChineseFont".to_owned());
+            break;
+        }
+    }
 
-    fonts.font_data.insert(
-        "NotoSansCJK".to_owned(),
-        egui::FontData::from_static(include_bytes!(
-            "../assets/fonts/NotoSansCJK-Regular.ttf"
-        )),
-    );
-
+    // Load emoji font from Windows system fonts at runtime
     if let Some(emoji_data) = load_system_emoji_font() {
         fonts.font_data.insert(
             "SystemEmoji".to_owned(),
@@ -47,65 +59,17 @@ fn configure_chinese_fonts(ctx: &egui::Context) {
             .push("SystemEmoji".to_owned());
     }
 
-    #[cfg(has_emoji_font)]
-    fonts
-        .families
-        .entry(egui::FontFamily::Proportional)
-        .or_default()
-        .push("NotoColorEmoji".to_owned());
-
-    fonts
-        .families
-        .entry(egui::FontFamily::Proportional)
-        .or_default()
-        .push("NotoSansCJK".to_owned());
-
-    fonts
-        .families
-        .entry(egui::FontFamily::Monospace)
-        .or_default()
-        .push("NotoSansCJK".to_owned());
-
     ctx.set_fonts(fonts);
 }
 
 fn load_system_emoji_font() -> Option<Vec<u8>> {
-    #[cfg(target_os = "windows")]
-    {
-
-        let candidates = [
-            r"C:\Windows\Fonts\seguisym.ttf",
-            r"C:\Windows\Fonts\seguiemj.ttf",
-        ];
-        for path in &candidates {
-            if let Ok(data) = std::fs::read(path) {
-                return Some(data);
-            }
-        }
-    }
-    #[cfg(target_os = "macos")]
-    {
-        let candidates = [
-            "/System/Library/Fonts/Apple Color Emoji.ttc",
-            "/System/Library/Fonts/Supplemental/Symbol.ttf",
-        ];
-        for path in &candidates {
-            if let Ok(data) = std::fs::read(path) {
-                return Some(data);
-            }
-        }
-    }
-    #[cfg(not(any(target_os = "windows", target_os = "macos")))]
-    {
-        let candidates = [
-            "/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf",
-            "/usr/share/fonts/noto-color-emoji/NotoColorEmoji.ttf",
-            "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
-        ];
-        for path in &candidates {
-            if let Ok(data) = std::fs::read(path) {
-                return Some(data);
-            }
+    let candidates = [
+        r"C:\Windows\Fonts\seguisym.ttf",
+        r"C:\Windows\Fonts\seguiemj.ttf",
+    ];
+    for path in &candidates {
+        if let Ok(data) = std::fs::read(path) {
+            return Some(data);
         }
     }
     None
