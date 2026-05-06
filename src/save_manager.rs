@@ -27,11 +27,11 @@ impl SaveManager {
         }
 
         if !editor_exe.exists() {
-            return Err(anyhow!("编辑器EXE 不存在：{}", editor_exe.display()));
+            return Err(anyhow!("编辑器 EXE 不存在：{}", editor_exe.display()));
         }
 
         let json_path = save_path.with_extension("json");
-        info!("正在将二进制转换为JSON：{:?}", json_path);
+        info!("正在将二进制转换为 JSON：{:?}", json_path);
 
         let output = Command::new(editor_exe)
             .arg("bin2json")
@@ -54,13 +54,13 @@ impl SaveManager {
     pub fn export_json(json_value: &Value, export_path: &Path) -> Result<()> {
         let json_content = serde_json::to_string_pretty(json_value)?;
         fs::write(export_path, json_content)?;
-        info!("已导出JSON 到：{}", export_path.display());
+        info!("已导出 JSON 到：{}", export_path.display());
         Ok(())
     }
 
     pub fn save_save(save_path: &Path, json_value: &Value, editor_exe: &Path) -> Result<()> {
         if !editor_exe.exists() {
-            return Err(anyhow!("编辑器EXE 不存在：{}", editor_exe.display()));
+            return Err(anyhow!("编辑器 EXE 不存在：{}", editor_exe.display()));
         }
 
         let json_path = save_path.with_extension("json");
@@ -69,7 +69,7 @@ impl SaveManager {
         let json_content = serde_json::to_string_pretty(&json_value)?;
         fs::write(&json_path, json_content)?;
 
-        info!("已写入修改后的JSON：{:?}", json_path);
+        info!("已写入修改后的 JSON：{:?}", json_path);
 
         let output = Command::new(editor_exe)
             .arg("json2bin")
@@ -315,7 +315,7 @@ impl SaveManager {
         if normalized_type == "itemUpgrade" || normalized_type == "traitUpgrade" {
             if old_name.contains("Cornucopia") || new_name.contains("Cornucopia") {
                 warn!(
-                    "⚠操作涉及雅贝那（Cornucopia）：旧值「{}」→ 新值「{}」。\
+                    "⚠️操作涉及雅贝那（Cornucopia）：旧值「{}」→ 新值「{}」。\
                     雅贝那效果由游戏引擎缓存，修改后建议重启游戏以刷新效果。",
                     old_name, new_name
                 );
@@ -332,7 +332,7 @@ impl SaveManager {
         );
         if !old_name.is_empty() && old_bytes != new_bytes {
             warn!(
-                "⚠字符串长度变化：原始值「{}」{} 字节) →新值「{}」{} 字节)，差值{} 字节。\
+                "⚠️字符串长度变化：原始值「{}」{} 字节) →新值「{}」{} 字节)，差值{} 字节。\
                 若保存时出现 'Record size mismatch' 错误，原因在于游戏二进制格式要求各记录大小不变，\
                 但字段「{}」的字符串长度发生了变化（原 {} 字节，现 {} 字节）。",
                 old_name, old_bytes, new_name, new_bytes,
@@ -513,7 +513,7 @@ impl SaveManager {
 
         if skill_upgrade_id.is_none() {
             info!(
-                "⚠英雄 {} 没有有效的skillUpgrade 字段，跳过兵种技能同步",
+                "⚠️英雄 {} 没有有效的skillUpgrade 字段，跳过兵种技能同步",
                 hero_record_id
             );
             return Ok(());
@@ -1385,7 +1385,7 @@ impl SaveManager {
         );
         if null_multiple_count <= 255 {
             warn!(
-                "⚠背包圣杯已写入JSON，但存储时可能失败：\
+                "⚠️背包圣杯已写入JSON，但存储时可能失败：\
                 BinaryArray 槽位原来是NullMultiple(count={})（ 字节），\
                 替换为Reference（ 字节）会导致记录字节长度变化。\
                 保存时若出现 'Record size mismatch' 错误，属于预期内的格式限制。",
@@ -1796,7 +1796,7 @@ impl SaveManager {
         );
         if null_multiple_count <= 255 {
             warn!(
-                "⚠背包物品已写入JSON，但存储时可能失败：\
+                "⚠️背包物品已写入JSON，但存储时可能失败：\
                 BinaryArray 槽位原来是NullMultiple(count={})（ 字节），\
                 替换为Reference（ 字节）会导致记录字节长度变化。",
                 null_multiple_count
