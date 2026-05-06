@@ -1,0 +1,11 @@
+/home/runner/work/BadNorthSaveModifier/BadNorthSaveModifier/target/debug/deps/egui_glow-b1bd673b7eba4512.d: /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/lib.rs /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/painter.rs /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/misc_util.rs /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/shader_version.rs /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/vao.rs /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/shader/vertex.glsl /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/shader/fragment.glsl
+
+/home/runner/work/BadNorthSaveModifier/BadNorthSaveModifier/target/debug/deps/libegui_glow-b1bd673b7eba4512.rmeta: /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/lib.rs /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/painter.rs /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/misc_util.rs /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/shader_version.rs /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/vao.rs /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/shader/vertex.glsl /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/shader/fragment.glsl
+
+/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/lib.rs:
+/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/painter.rs:
+/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/misc_util.rs:
+/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/shader_version.rs:
+/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/vao.rs:
+/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/shader/vertex.glsl:
+/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui_glow-0.24.1/src/shader/fragment.glsl:

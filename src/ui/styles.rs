@@ -25,13 +25,13 @@ impl AppStyle {
     }
 
     pub fn text_success(message: &str) -> egui::RichText {
-        egui::RichText::new(format!("‚ú?{}", message))
+        egui::RichText::new(format!("‚úî{}", message))
             .color(Self::color_success())
             .size(12.0)
     }
 
     pub fn text_error(message: &str) -> egui::RichText {
-        egui::RichText::new(format!("‚ù?{}", message))
+        egui::RichText::new(format!("‚ùå{}", message))
             .color(Self::color_error())
             .size(12.0)
     }
