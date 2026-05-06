@@ -319,48 +319,48 @@ fn t(key: &str, lang: &Language) -> &'static str {
             "id"           => "ID",
             "current"      => "当前",
             "level"        => "等级",
-            "new_value"    => "新�?,
+            "new_value"    => "新值",
             "quick_select" => "快速选择",
-            "apply_change" => "�?应用变更",
-            "no_class"     => "( 无兵�?)",
-            "no_item"      => "当前: ( 无装�?)",
-            "no_trait"     => "当前: ( 无特�?)",
+            "apply_change" => "✔应用变更",
+            "no_class"     => "( 无兵种)",
+            "no_item"      => "当前: ( 无装备)",
+            "no_trait"     => "当前: ( 无特质)",
 
             "app_settings"  => "应用设置",
-            "color_mode"    => "色彩模式�?,
+            "color_mode"    => "色彩模式：",
             "dark_mode"     => "黑色",
             "colorful_mode" => "彩色",
             "follow_system" => "跟随系统",
-            "language"      => "语言�?,
+            "language"      => "语言：",
             "chinese"       => "中文 CN",
             "english"       => "English EN",
-            "auto_save"     => "设置已自动保�?,
+            "auto_save"     => "设置已自动保存",
 
-            "select_exe"    => "请选择 BadNorthSaveEditorRust.exe 的位�?,
-            "browse_exe"    => "浏览并选择编辑�?EXE",
-            "select_save"   => "请选择游戏存档文件�?,
+            "select_exe"    => "请选择 BadNorthSaveEditorRust.exe 的位置",
+            "browse_exe"    => "浏览并选择编辑器EXE",
+            "select_save"   => "请选择游戏存档文件：",
             "browse_save"   => "浏览并选择存档文件",
             "editor_label"  => "编辑器：",
-            "reselect_exe"  => "重新选择编辑�?EXE",
+            "reselect_exe"  => "重新选择编辑器EXE",
 
             "show_logs"     => "显示日志",
             "hide_logs"     => "隐藏日志",
             "export_json"   => "导出 JSON",
             "load_save"     => "加载其他存档",
-            "save_file"     => "备份并替换存�?,
+            "save_file"     => "备份并替换存档",
             "refresh"       => "刷新",
 
             "heroes"        => "英雄",
             "coin_bank"     => "货币 (coinBank) 修改",
             "grail_count"   => "圣杯数量修改",
             "total_grails"  => "总数:",
-            "grail_on_hero" => "已被装备�?",
-            "grail_in_inv"  => "未被装备�?",
+            "grail_on_hero" => "已被装备数",
+            "grail_in_inv"  => "未被装备数",
             "grail_code"    => "圣杯代码:",
             "set_count"     => "设置数量:",
             "copy_code"     => "复制 Hero_Upgrade_Grail 到剪贴板",
-            "current_value" => "当前�?,
-            "new_value_label" => "新�?,
+            "current_value" => "当前值",
+            "new_value_label" => "新值",
             "apply_modify"  => "应用修改",
             "apply_btn"     => "应用",
             "clear_logs"    => "清空",
@@ -372,46 +372,46 @@ fn t(key: &str, lang: &Language) -> &'static str {
             "inv_panel_title"          => "背包装备修改",
             "inv_item_code"            => "代码:",
             "inv_total"                => "总数:",
-            "inv_on_hero"              => "已装�?",
-            "inv_in_inv"               => "背包�?",
+            "inv_on_hero"              => "已装备",
+            "inv_in_inv"               => "背包中",
             "inv_set_count"            => "设置数量:",
             "inv_bomb_title"           => "炸弹 (Bomb)",
             "inv_mine_title"           => "地雷 (Mine)",
-            "inv_stone_title"          => "贤者之�?(Philosophers Stone)",
+            "inv_stone_title"          => "贤者之石(Philosophers Stone)",
             "inv_size_title"           => "指挥之戒 (Size)",
             "inv_warhammer_title"      => "战锤 (Warhammer)",
-            "inv_cornucopia_title"     => "雅贝�?(Cornucopia)",
+            "inv_cornucopia_title"     => "雅贝那(Cornucopia)",
             "inv_warhorn_title"        => "战争号角 (War Horn)",
 
             "menu_settings"   => "设置",
-            "menu_commanders" => "指挥官修�?,
-            "menu_currency"   => "货币和物品修�?,
+            "menu_commanders" => "指挥官修改",
+            "menu_currency"   => "货币和物品修改",
             "menu_coinbank"   => "  coinBank 修改",
-            "menu_grail"      => "  背包内装备修�?,
+            "menu_grail"      => "  背包内装备修改",
             "inv_capacity_hint" => "提示：背包最多可存放 20 个物品（所有装备之和）",
 
             "inv_overview_title"  => "背包内装备总览",
             "inv_overview_total"  => "背包总数",
-            "inv_overview_limit"  => "（上�?20�?,
+            "inv_overview_limit"  => "（上限20）",
             "inv_overview_items"  => "当前物品",
             "inv_overview_mod"    => "Mod 物品",
             "inv_overview_empty"  => "（背包为空）",
-            "inv_custom_label"    => "添加自定义物�?,
+            "inv_custom_label"    => "添加自定义物品",
             "inv_custom_hint"     => "输入物品字段名称，如 Hero_Upgrade_ModWeapon",
             "inv_custom_apply"    => "应用",
-            "inv_custom_empty"    => "请输入物品字段名�?,
-            "warhorn_wip"         => "战争号角修改功能完善中，请移步于'指挥官修�?�?装备修改'实现战争号角修改",
-            "cornucopia_wip"      => "雅贝那修改功能完善中，敬请期�?,
-            "yabena_wip"          => "雅贝那修改功能完善中，请移步�?背包内装备修�?实现雅贝那修�?,
+            "inv_custom_empty"    => "请输入物品字段名称",
+            "warhorn_wip"         => "战争号角修改功能完善中，请移步于'指挥官修改的装备修改'实现战争号角修改",
+            "cornucopia_wip"      => "雅贝那修改功能完善中，敬请期待",
+            "yabena_wip"          => "雅贝那修改功能完善中，请移步于背包内装备修改实现雅贝那修改",
             "no_upgrade"          => "( 无消耗型升级 )",
             "remove_item"         => "移除装备",
             "remove_trait"        => "移除特质",
 
-            "editor_exe_path"     => "编辑器路�?,
-            "editor_exe_current"  => "当前编辑�?,
+            "editor_exe_path"     => "编辑器路径",
+            "editor_exe_current"  => "当前编辑器",
             "editor_exe_browse"   => "浏览并修改编辑器",
-            "editor_exe_reset"    => "重置编辑器路�?,
-            "editor_exe_invalid"  => "编辑器路径无效或已删�?,
+            "editor_exe_reset"    => "重置编辑器路径",
+            "editor_exe_invalid"  => "编辑器路径无效或已删除",
             "editor_exe_saved"    => "编辑器路径已保存",
 
             "keep_logs_visible"   => "日志显示",
@@ -421,7 +421,7 @@ fn t(key: &str, lang: &Language) -> &'static str {
             "item_editor_title"   => "装备修改 (Item)",
             "trait_editor_title"  => "特质修改 (Trait)",
             "log_heading"         => "操作日志",
-            "apply_hint"          => "输入后点击【应用�?,
+            "apply_hint"          => "输入后点击【应用】",
             _              => "",
         },
         Language::English => match key {
@@ -432,7 +432,7 @@ fn t(key: &str, lang: &Language) -> &'static str {
             "level"        => "Level",
             "new_value"    => "New Value",
             "quick_select" => "Quick Select",
-            "apply_change" => "�?Apply",
+            "apply_change" => "✔Apply",
             "no_class"     => "( No Class )",
             "no_item"      => "Current: ( No Item )",
             "no_trait"     => "Current: ( No Trait )",
@@ -476,7 +476,7 @@ fn t(key: &str, lang: &Language) -> &'static str {
             "apply_btn"     => "Apply",
             "clear_logs"    => "Clear",
             "copy_logs"     => "Select All & Copy",
-            "select_hero"   => "�?Select a hero from the left",
+            "select_hero"   => "→Select a hero from the left",
             "abnormal_data" => "Hero data is abnormal",
             "grail_wip"     => "Inventory equipment management coming soon, stay tuned",
 
@@ -555,12 +555,12 @@ fn main() -> Result<(), eframe::Error> {
     let options = eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default()
             .with_inner_size([1800.0, 1100.0])
-            .with_title("BadNorthSaveModifier存档修改�?),
+            .with_title("BadNorthSaveModifier存档修改器"),
         ..Default::default()
     };
 
     eframe::run_native(
-        "BadNorthSaveModifier存档修改�?,
+        "BadNorthSaveModifier存档修改器",
         options,
         Box::new(|cc| {
             configure_chinese_fonts(&cc.egui_ctx);
@@ -795,7 +795,7 @@ impl eframe::App for ModifierApp {
     }
 }
 
-const APP_TITLE: &str = "BadNorthSaveModifier存档修改�?;
+const APP_TITLE: &str = "BadNorthSaveModifier存档修改器";
 
 const TOOLBAR_BTN_HEIGHT: f32 = 36.0;
 
@@ -807,13 +807,13 @@ impl ModifierApp {
             ui.heading(APP_TITLE);
             ui.add_space(30.0);
 
-            ui.label("请选择 BadNorthSaveEditorRust.exe �?BadNorthSaveConverter.exe 的位�?);
+            ui.label("请选择 BadNorthSaveEditorRust.exe 或 BadNorthSaveConverter.exe 的位置");
             ui.add_space(20.0);
 
-            if ui.button("浏览并选择编辑�?EXE (�?BadNorthSaveConverter.exe)").clicked() {
+            if ui.button("浏览并选择编辑器EXE (或BadNorthSaveConverter.exe)").clicked() {
                 if let Some(path) = rfd::FileDialog::new()
-                    .set_title("选择 BadNorthSaveEditorRust.exe �?BadNorthSaveConverter.exe")
-                    .add_filter("可执行文�?, &["exe"])
+                    .set_title("选择 BadNorthSaveEditorRust.exe 或 BadNorthSaveConverter.exe")
+                    .add_filter("可执行文件", &["exe"])
                     .pick_file()
                 {
                     self.app_settings.editor_exe_path = Some(path.clone());
@@ -881,7 +881,7 @@ impl ModifierApp {
             ui.heading(APP_TITLE);
             ui.add_space(30.0);
 
-            ui.label("请选择要加载的其他存档文件�?);
+            ui.label("请选择要加载的其他存档文件：");
             ui.add_space(20.0);
 
             if ui.button("浏览并选择存档文件").clicked() {
@@ -904,7 +904,7 @@ impl ModifierApp {
 
             ui.add_space(20.0);
 
-            if ui.button("返回编辑�?).clicked() {
+            if ui.button("返回编辑器").clicked() {
                 if let AppState::LoadDifferentSave {
                     json_data,
                     previous_save_path,
@@ -979,7 +979,7 @@ impl ModifierApp {
                     }
                     if ui.add(egui::Button::new(t("refresh", &lang)).min_size(tb_size)).clicked() {
                         do_refresh = true;
-                        edit_state.add_log("INFO", "已刷新数�?);
+                        edit_state.add_log("INFO", "已刷新数据");
                     }
                 });
             });
@@ -1026,9 +1026,9 @@ impl ModifierApp {
 
                                     let commander_base = t("menu_commanders", &lang);
                                     let commander_label = if edit_state.commander_expanded {
-                                        format!("{} �?, commander_base)
+                                        format!("{} ▶", commander_base)
                                     } else {
-                                        format!("{} �?, commander_base)
+                                        format!("{} ▶", commander_base)
                                     };
                                     let commander_active = matches!(
                                         edit_state.menu_selection,
@@ -1065,9 +1065,9 @@ impl ModifierApp {
 
                                     let currency_base = t("menu_currency", &lang);
                                     let currency_label = if edit_state.currency_expanded {
-                                        format!("{} �?, currency_base)
+                                        format!("{} ▶", currency_base)
                                     } else {
-                                        format!("{} �?, currency_base)
+                                        format!("{} ▶", currency_base)
                                     };
                                     let currency_active = matches!(
                                         edit_state.menu_selection,
@@ -1122,21 +1122,21 @@ impl ModifierApp {
                                                 {
                                                     self.app_settings.color_mode = ColorMode::Black;
                                                     let _ = self.app_settings.save();
-                                                    edit_state.add_log("INFO", "色彩模式已改�? 黑色");
+                                                    edit_state.add_log("INFO", "色彩模式已改为 黑色");
                                                 }
                                                 if toggle_btn(ui, t("colorful_mode", &lang), self.app_settings.color_mode == ColorMode::Colorful)
                                                     && self.app_settings.color_mode != ColorMode::Colorful
                                                 {
                                                     self.app_settings.color_mode = ColorMode::Colorful;
                                                     let _ = self.app_settings.save();
-                                                    edit_state.add_log("INFO", "色彩模式已改�? 彩色");
+                                                    edit_state.add_log("INFO", "色彩模式已改为 彩色");
                                                 }
                                                 if toggle_btn(ui, t("follow_system", &lang), self.app_settings.color_mode == ColorMode::FollowSystem)
                                                     && self.app_settings.color_mode != ColorMode::FollowSystem
                                                 {
                                                     self.app_settings.color_mode = ColorMode::FollowSystem;
                                                     let _ = self.app_settings.save();
-                                                    edit_state.add_log("INFO", "色彩模式已改�? 跟随系统");
+                                                    edit_state.add_log("INFO", "色彩模式已改为 跟随系统");
                                                 }
                                             });
                                         });
@@ -1151,7 +1151,7 @@ impl ModifierApp {
                                                 {
                                                     self.app_settings.language = Language::Chinese;
                                                     let _ = self.app_settings.save();
-                                                    edit_state.add_log("INFO", "语言已改�? 中文");
+                                                    edit_state.add_log("INFO", "语言已改为 中文");
                                                 }
                                                 if toggle_btn(ui, t("english", &lang), self.app_settings.language == Language::English)
                                                     && self.app_settings.language != Language::English
@@ -1174,7 +1174,7 @@ impl ModifierApp {
                                         if ui.checkbox(&mut logs_visible, t("keep_logs_label", &lang)).changed() {
                                             self.app_settings.keep_logs_visible = logs_visible;
                                             let _ = self.app_settings.save();
-                                            edit_state.add_log("INFO", if self.app_settings.keep_logs_visible { "�?日志显示已开�? } else { "�?日志显示已关�? });
+                                            edit_state.add_log("INFO", if self.app_settings.keep_logs_visible { "✔日志显示已开启" } else { "✔日志显示已关闭" });
                                         }
 
                                         ui.add_space(16.0);
@@ -1200,14 +1200,14 @@ impl ModifierApp {
 
                                             if ui.button(t("editor_exe_browse", &lang)).clicked() {
                                                 if let Some(path) = rfd::FileDialog::new()
-                                                    .set_title("选择 BadNorthSaveEditorRust.exe �?BadNorthSaveConverter.exe")
-                                                    .add_filter("可执行文�?, &["exe"])
+                                                    .set_title("选择 BadNorthSaveEditorRust.exe 或 BadNorthSaveConverter.exe")
+                                                    .add_filter("可执行文件", &["exe"])
                                                     .pick_file()
                                                 {
                                                     self.editor_exe = Some(path.clone());
                                                     self.app_settings.editor_exe_path = Some(path);
                                                     let _ = self.app_settings.save();
-                                                    edit_state.add_log("INFO", &format!("�?{}", t("editor_exe_saved", &lang)));
+                                                    edit_state.add_log("INFO", &format!("✔{}", t("editor_exe_saved", &lang)));
                                                 }
                                             }
                                             ui.label("(或BadNorthSaveConverter.exe)");
@@ -1270,7 +1270,7 @@ impl ModifierApp {
                                             if let Ok(new_coins) = edit_state.new_coins.parse::<i32>() {
                                                 match SaveManager::modify_coin_bank(json_data, new_coins) {
                                                     Ok(_) => {
-                                                        edit_state.add_log("INFO", &format!("�?货币已修�? {} �?{}", coin_bank, new_coins));
+                                                        edit_state.add_log("INFO", &format!("✔货币已修改 {} →{}", coin_bank, new_coins));
                                                         edit_state.new_coins.clear();
                                                     }
                                                     Err(e) => {
@@ -1349,7 +1349,7 @@ impl ModifierApp {
                                                     } else {
                                                         match SaveManager::add_custom_item_to_inventory(json_data, &code) {
                                                             Ok(_) => {
-                                                                edit_state.add_log("INFO", &format!("�?已添加物�? {}", code));
+                                                                edit_state.add_log("INFO", &format!("✔已添加物品 {}", code));
                                                                 edit_state.custom_item_input.clear();
                                                                 if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) {
                                                                     *recruited_heroes = heroes;
@@ -1387,7 +1387,7 @@ impl ModifierApp {
                                                 ui.monospace(egui::RichText::new(GRAIL_UPGRADE_CODE).color(egui::Color32::LIGHT_GREEN));
                                                 if ui.add(egui::Button::new("📋").small()).on_hover_text(GRAIL_UPGRADE_CODE).clicked() {
                                                     ui.output_mut(|o| o.copied_text = GRAIL_UPGRADE_CODE.to_string());
-                                                    edit_state.add_log("INFO", &format!("📋 已复�? {}", GRAIL_UPGRADE_CODE));
+                                                    edit_state.add_log("INFO", &format!("📋 已复制 {}", GRAIL_UPGRADE_CODE));
                                                 }
                                             });
                                             ui.separator();
@@ -1400,11 +1400,11 @@ impl ModifierApp {
                                                         let current_item_total = SaveManager::get_total_grail_count(json_data);
                                                         let to_add = (n - current_item_total).max(0);
                                                         if to_add > 0 && current_total + to_add > 20 {
-                                                            edit_state.add_log("ERROR", &format!("�?设置失败：总数会超过容量（{} + {} > 20�?, current_total, to_add));
+                                                            edit_state.add_log("ERROR", &format!("❌设置失败：总数会超过容量（{} + {} > 20）", current_total, to_add));
                                                         } else {
                                                         match SaveManager::set_grail_count(json_data, n) {
                                                             Ok(_) => {
-                                                                edit_state.add_log("INFO", &format!("�?圣杯已设�? {}", n));
+                                                                edit_state.add_log("INFO", &format!("✔圣杯已设置 {}", n));
                                                                 edit_state.new_grails.clear();
                                                                 if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = heroes; }
                                                             }
@@ -1417,13 +1417,13 @@ impl ModifierApp {
                                             ui.horizontal(|ui| {
                                                 if ui.button("[+1]").clicked() {
                                                     match SaveManager::increment_grail_count(json_data) {
-                                                        Ok(n) => { edit_state.add_log("INFO", &format!("�?圣杯 +1: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
+                                                        Ok(n) => { edit_state.add_log("INFO", &format!("✔圣杯 +1: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
                                                         Err(e) => edit_state.add_log("ERROR", &format!("添加圣杯失败: {}", e)),
                                                     }
                                                 }
-                                                if ui.button("[�?]").clicked() {
+                                                if ui.button("[−]").clicked() {
                                                     match SaveManager::decrement_grail_count(json_data) {
-                                                        Ok(n) => { edit_state.add_log("INFO", &format!("�?圣杯 �?: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
+                                                        Ok(n) => { edit_state.add_log("INFO", &format!("✔圣杯 −: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
                                                         Err(e) => edit_state.add_log("ERROR", &format!("移除圣杯失败: {}", e)),
                                                     }
                                                 }
@@ -1453,7 +1453,7 @@ impl ModifierApp {
                                                 ui.monospace(egui::RichText::new(BOMB_UPGRADE_CODE).color(egui::Color32::LIGHT_GREEN));
                                                 if ui.add(egui::Button::new("📋").small()).on_hover_text(BOMB_UPGRADE_CODE).clicked() {
                                                     ui.output_mut(|o| o.copied_text = BOMB_UPGRADE_CODE.to_string());
-                                                    edit_state.add_log("INFO", &format!("📋 已复�? {}", BOMB_UPGRADE_CODE));
+                                                    edit_state.add_log("INFO", &format!("📋 已复制 {}", BOMB_UPGRADE_CODE));
                                                 }
                                             });
                                             ui.separator();
@@ -1466,11 +1466,11 @@ impl ModifierApp {
                                                         let current_item_total = SaveManager::get_total_bomb_count(json_data);
                                                         let to_add = (n - current_item_total).max(0);
                                                         if to_add > 0 && current_total + to_add > 20 {
-                                                            edit_state.add_log("ERROR", &format!("�?设置失败：总数会超过容量（{} + {} > 20�?, current_total, to_add));
+                                                            edit_state.add_log("ERROR", &format!("❌设置失败：总数会超过容量（{} + {} > 20）", current_total, to_add));
                                                         } else {
                                                         match SaveManager::set_bomb_count(json_data, n) {
                                                             Ok(_) => {
-                                                                edit_state.add_log("INFO", &format!("�?炸弹已设�? {}", n));
+                                                                edit_state.add_log("INFO", &format!("✔炸弹已设置 {}", n));
                                                                 edit_state.new_bomb.clear();
                                                                 if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = heroes; }
                                                             }
@@ -1483,13 +1483,13 @@ impl ModifierApp {
                                             ui.horizontal(|ui| {
                                                 if ui.button("[+1]").clicked() {
                                                     match SaveManager::increment_bomb_count(json_data) {
-                                                        Ok(n) => { edit_state.add_log("INFO", &format!("�?炸弹 +1: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
+                                                        Ok(n) => { edit_state.add_log("INFO", &format!("✔炸弹 +1: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
                                                         Err(e) => edit_state.add_log("ERROR", &format!("添加炸弹失败: {}", e)),
                                                     }
                                                 }
-                                                if ui.button("[�?]").clicked() {
+                                                if ui.button("[−]").clicked() {
                                                     match SaveManager::decrement_bomb_count(json_data) {
-                                                        Ok(n) => { edit_state.add_log("INFO", &format!("�?炸弹 �?: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
+                                                        Ok(n) => { edit_state.add_log("INFO", &format!("✔炸弹 −: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
                                                         Err(e) => edit_state.add_log("ERROR", &format!("移除炸弹失败: {}", e)),
                                                     }
                                                 }
@@ -1519,7 +1519,7 @@ impl ModifierApp {
                                                 ui.monospace(egui::RichText::new(MINE_UPGRADE_CODE).color(egui::Color32::LIGHT_GREEN));
                                                 if ui.add(egui::Button::new("📋").small()).on_hover_text(MINE_UPGRADE_CODE).clicked() {
                                                     ui.output_mut(|o| o.copied_text = MINE_UPGRADE_CODE.to_string());
-                                                    edit_state.add_log("INFO", &format!("📋 已复�? {}", MINE_UPGRADE_CODE));
+                                                    edit_state.add_log("INFO", &format!("📋 已复制 {}", MINE_UPGRADE_CODE));
                                                 }
                                             });
                                             ui.separator();
@@ -1532,11 +1532,11 @@ impl ModifierApp {
                                                         let current_item_total = SaveManager::get_total_mine_count(json_data);
                                                         let to_add = (n - current_item_total).max(0);
                                                         if to_add > 0 && current_total + to_add > 20 {
-                                                            edit_state.add_log("ERROR", &format!("�?设置失败：总数会超过容量（{} + {} > 20�?, current_total, to_add));
+                                                            edit_state.add_log("ERROR", &format!("❌设置失败：总数会超过容量（{} + {} > 20）", current_total, to_add));
                                                         } else {
                                                         match SaveManager::set_mine_count(json_data, n) {
                                                             Ok(_) => {
-                                                                edit_state.add_log("INFO", &format!("�?地雷已设�? {}", n));
+                                                                edit_state.add_log("INFO", &format!("✔地雷已设置 {}", n));
                                                                 edit_state.new_mine.clear();
                                                                 if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = heroes; }
                                                             }
@@ -1549,13 +1549,13 @@ impl ModifierApp {
                                             ui.horizontal(|ui| {
                                                 if ui.button("[+1]").clicked() {
                                                     match SaveManager::increment_mine_count(json_data) {
-                                                        Ok(n) => { edit_state.add_log("INFO", &format!("�?地雷 +1: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
+                                                        Ok(n) => { edit_state.add_log("INFO", &format!("✔地雷 +1: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
                                                         Err(e) => edit_state.add_log("ERROR", &format!("添加地雷失败: {}", e)),
                                                     }
                                                 }
-                                                if ui.button("[�?]").clicked() {
+                                                if ui.button("[−]").clicked() {
                                                     match SaveManager::decrement_mine_count(json_data) {
-                                                        Ok(n) => { edit_state.add_log("INFO", &format!("�?地雷 �?: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
+                                                        Ok(n) => { edit_state.add_log("INFO", &format!("✔地雷 −: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
                                                         Err(e) => edit_state.add_log("ERROR", &format!("移除地雷失败: {}", e)),
                                                     }
                                                 }
@@ -1585,7 +1585,7 @@ impl ModifierApp {
                                                 ui.monospace(egui::RichText::new(PHILOSOPHERS_STONE_UPGRADE_CODE).color(egui::Color32::LIGHT_GREEN));
                                                 if ui.add(egui::Button::new("📋").small()).on_hover_text(PHILOSOPHERS_STONE_UPGRADE_CODE).clicked() {
                                                     ui.output_mut(|o| o.copied_text = PHILOSOPHERS_STONE_UPGRADE_CODE.to_string());
-                                                    edit_state.add_log("INFO", &format!("📋 已复�? {}", PHILOSOPHERS_STONE_UPGRADE_CODE));
+                                                    edit_state.add_log("INFO", &format!("📋 已复制 {}", PHILOSOPHERS_STONE_UPGRADE_CODE));
                                                 }
                                             });
                                             ui.separator();
@@ -1598,15 +1598,15 @@ impl ModifierApp {
                                                         let current_item_total = SaveManager::get_total_philosophers_stone_count(json_data);
                                                         let to_add = (n - current_item_total).max(0);
                                                         if to_add > 0 && current_total + to_add > 20 {
-                                                            edit_state.add_log("ERROR", &format!("�?设置失败：总数会超过容量（{} + {} > 20�?, current_total, to_add));
+                                                            edit_state.add_log("ERROR", &format!("❌设置失败：总数会超过容量（{} + {} > 20）", current_total, to_add));
                                                         } else {
                                                         match SaveManager::set_philosophers_stone_count(json_data, n) {
                                                             Ok(_) => {
-                                                                edit_state.add_log("INFO", &format!("�?贤者之石已设置: {}", n));
+                                                                edit_state.add_log("INFO", &format!("✔贤者之石已设置: {}", n));
                                                                 edit_state.new_philosophers_stone.clear();
                                                                 if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = heroes; }
                                                             }
-                                                            Err(e) => edit_state.add_log("ERROR", &format!("修改贤者之石失�? {}", e)),
+                                                            Err(e) => edit_state.add_log("ERROR", &format!("修改贤者之石失质 {}", e)),
                                                         }
                                                         }
                                                     }
@@ -1615,14 +1615,14 @@ impl ModifierApp {
                                             ui.horizontal(|ui| {
                                                 if ui.button("[+1]").clicked() {
                                                     match SaveManager::increment_philosophers_stone_count(json_data) {
-                                                        Ok(n) => { edit_state.add_log("INFO", &format!("�?贤者之�?+1: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
-                                                        Err(e) => edit_state.add_log("ERROR", &format!("添加贤者之石失�? {}", e)),
+                                                        Ok(n) => { edit_state.add_log("INFO", &format!("✔贤者之石+1: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
+                                                        Err(e) => edit_state.add_log("ERROR", &format!("添加贤者之石失质 {}", e)),
                                                     }
                                                 }
-                                                if ui.button("[�?]").clicked() {
+                                                if ui.button("[−]").clicked() {
                                                     match SaveManager::decrement_philosophers_stone_count(json_data) {
-                                                        Ok(n) => { edit_state.add_log("INFO", &format!("�?贤者之�?�?: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
-                                                        Err(e) => edit_state.add_log("ERROR", &format!("移除贤者之石失�? {}", e)),
+                                                        Ok(n) => { edit_state.add_log("INFO", &format!("✔贤者之石−: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
+                                                        Err(e) => edit_state.add_log("ERROR", &format!("移除贤者之石失质 {}", e)),
                                                     }
                                                 }
                                             });
@@ -1651,7 +1651,7 @@ impl ModifierApp {
                                                 ui.monospace(egui::RichText::new(SIZE_UPGRADE_CODE).color(egui::Color32::LIGHT_GREEN));
                                                 if ui.add(egui::Button::new("📋").small()).on_hover_text(SIZE_UPGRADE_CODE).clicked() {
                                                     ui.output_mut(|o| o.copied_text = SIZE_UPGRADE_CODE.to_string());
-                                                    edit_state.add_log("INFO", &format!("📋 已复�? {}", SIZE_UPGRADE_CODE));
+                                                    edit_state.add_log("INFO", &format!("📋 已复制 {}", SIZE_UPGRADE_CODE));
                                                 }
                                             });
                                             ui.separator();
@@ -1664,11 +1664,11 @@ impl ModifierApp {
                                                         let current_item_total = SaveManager::get_total_size_count(json_data);
                                                         let to_add = (n - current_item_total).max(0);
                                                         if to_add > 0 && current_total + to_add > 20 {
-                                                            edit_state.add_log("ERROR", &format!("�?设置失败：总数会超过容量（{} + {} > 20�?, current_total, to_add));
+                                                            edit_state.add_log("ERROR", &format!("❌设置失败：总数会超过容量（{} + {} > 20）", current_total, to_add));
                                                         } else {
                                                         match SaveManager::set_size_count(json_data, n) {
                                                             Ok(_) => {
-                                                                edit_state.add_log("INFO", &format!("�?指挥之戒已设�? {}", n));
+                                                                edit_state.add_log("INFO", &format!("✔指挥之戒已设置 {}", n));
                                                                 edit_state.new_size.clear();
                                                                 if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = heroes; }
                                                             }
@@ -1681,13 +1681,13 @@ impl ModifierApp {
                                             ui.horizontal(|ui| {
                                                 if ui.button("[+1]").clicked() {
                                                     match SaveManager::increment_size_count(json_data) {
-                                                        Ok(n) => { edit_state.add_log("INFO", &format!("�?指挥之戒 +1: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
+                                                        Ok(n) => { edit_state.add_log("INFO", &format!("✔指挥之戒 +1: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
                                                         Err(e) => edit_state.add_log("ERROR", &format!("添加指挥之戒失败: {}", e)),
                                                     }
                                                 }
-                                                if ui.button("[�?]").clicked() {
+                                                if ui.button("[−]").clicked() {
                                                     match SaveManager::decrement_size_count(json_data) {
-                                                        Ok(n) => { edit_state.add_log("INFO", &format!("�?指挥之戒 �?: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
+                                                        Ok(n) => { edit_state.add_log("INFO", &format!("✔指挥之戒 −: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
                                                         Err(e) => edit_state.add_log("ERROR", &format!("移除指挥之戒失败: {}", e)),
                                                     }
                                                 }
@@ -1717,7 +1717,7 @@ impl ModifierApp {
                                                 ui.monospace(egui::RichText::new(WARHAMMER_UPGRADE_CODE).color(egui::Color32::LIGHT_GREEN));
                                                 if ui.add(egui::Button::new("📋").small()).on_hover_text(WARHAMMER_UPGRADE_CODE).clicked() {
                                                     ui.output_mut(|o| o.copied_text = WARHAMMER_UPGRADE_CODE.to_string());
-                                                    edit_state.add_log("INFO", &format!("📋 已复�? {}", WARHAMMER_UPGRADE_CODE));
+                                                    edit_state.add_log("INFO", &format!("📋 已复制 {}", WARHAMMER_UPGRADE_CODE));
                                                 }
                                             });
                                             ui.separator();
@@ -1730,11 +1730,11 @@ impl ModifierApp {
                                                         let current_item_total = SaveManager::get_total_warhammer_count(json_data);
                                                         let to_add = (n - current_item_total).max(0);
                                                         if to_add > 0 && current_total + to_add > 20 {
-                                                            edit_state.add_log("ERROR", &format!("�?设置失败：总数会超过容量（{} + {} > 20�?, current_total, to_add));
+                                                            edit_state.add_log("ERROR", &format!("❌设置失败：总数会超过容量（{} + {} > 20）", current_total, to_add));
                                                         } else {
                                                         match SaveManager::set_warhammer_count(json_data, n) {
                                                             Ok(_) => {
-                                                                edit_state.add_log("INFO", &format!("�?战锤已设�? {}", n));
+                                                                edit_state.add_log("INFO", &format!("✔战锤已设置 {}", n));
                                                                 edit_state.new_warhammer.clear();
                                                                 if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = heroes; }
                                                             }
@@ -1747,13 +1747,13 @@ impl ModifierApp {
                                             ui.horizontal(|ui| {
                                                 if ui.button("[+1]").clicked() {
                                                     match SaveManager::increment_warhammer_count(json_data) {
-                                                        Ok(n) => { edit_state.add_log("INFO", &format!("�?战锤 +1: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
+                                                        Ok(n) => { edit_state.add_log("INFO", &format!("✔战锤 +1: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
                                                         Err(e) => edit_state.add_log("ERROR", &format!("添加战锤失败: {}", e)),
                                                     }
                                                 }
-                                                if ui.button("[�?]").clicked() {
+                                                if ui.button("[−]").clicked() {
                                                     match SaveManager::decrement_warhammer_count(json_data) {
-                                                        Ok(n) => { edit_state.add_log("INFO", &format!("�?战锤 �?: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
+                                                        Ok(n) => { edit_state.add_log("INFO", &format!("✔战锤 −: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
                                                         Err(e) => edit_state.add_log("ERROR", &format!("移除战锤失败: {}", e)),
                                                     }
                                                 }
@@ -1783,7 +1783,7 @@ impl ModifierApp {
                                                 ui.monospace(egui::RichText::new(CORNUCOPIA_UPGRADE_CODE).color(egui::Color32::LIGHT_GREEN));
                                                 if ui.add(egui::Button::new("📋").small()).on_hover_text(CORNUCOPIA_UPGRADE_CODE).clicked() {
                                                     ui.output_mut(|o| o.copied_text = CORNUCOPIA_UPGRADE_CODE.to_string());
-                                                    edit_state.add_log("INFO", &format!("📋 已复�? {}", CORNUCOPIA_UPGRADE_CODE));
+                                                    edit_state.add_log("INFO", &format!("📋 已复制 {}", CORNUCOPIA_UPGRADE_CODE));
                                                 }
                                             });
                                             ui.separator();
@@ -1796,15 +1796,15 @@ impl ModifierApp {
                                                         let current_item_total = SaveManager::get_total_cornucopia_count(json_data);
                                                         let to_add = (n - current_item_total).max(0);
                                                         if to_add > 0 && current_total + to_add > 20 {
-                                                            edit_state.add_log("ERROR", &format!("�?设置失败：总数会超过容量（{} + {} > 20�?, current_total, to_add));
+                                                            edit_state.add_log("ERROR", &format!("❌设置失败：总数会超过容量（{} + {} > 20）", current_total, to_add));
                                                         } else {
                                                         match SaveManager::set_cornucopia_count(json_data, n) {
                                                             Ok(_) => {
-                                                                edit_state.add_log("INFO", &format!("�?雅贝那已设置: {}", n));
+                                                                edit_state.add_log("INFO", &format!("✔雅贝那已设置: {}", n));
                                                                 edit_state.new_cornucopia.clear();
                                                                 if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = heroes; }
                                                             }
-                                                            Err(e) => edit_state.add_log("ERROR", &format!("修改雅贝那失�? {}", e)),
+                                                            Err(e) => edit_state.add_log("ERROR", &format!("修改雅贝那失质 {}", e)),
                                                         }
                                                         }
                                                     }
@@ -1813,14 +1813,14 @@ impl ModifierApp {
                                             ui.horizontal(|ui| {
                                                 if ui.add_enabled(true, egui::Button::new("[+1]")).clicked() {
                                                     match SaveManager::increment_cornucopia_count(json_data) {
-                                                        Ok(n) => { edit_state.add_log("INFO", &format!("�?雅贝�?+1: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
-                                                        Err(e) => edit_state.add_log("ERROR", &format!("添加雅贝那失�? {}", e)),
+                                                        Ok(n) => { edit_state.add_log("INFO", &format!("✔雅贝那+1: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
+                                                        Err(e) => edit_state.add_log("ERROR", &format!("添加雅贝那失质 {}", e)),
                                                     }
                                                 }
-                                                if ui.add_enabled(true, egui::Button::new("[�?]")).clicked() {
+                                                if ui.add_enabled(true, egui::Button::new("[−]")).clicked() {
                                                     match SaveManager::decrement_cornucopia_count(json_data) {
-                                                        Ok(n) => { edit_state.add_log("INFO", &format!("�?雅贝�?�?: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
-                                                        Err(e) => edit_state.add_log("ERROR", &format!("移除雅贝那失�? {}", e)),
+                                                        Ok(n) => { edit_state.add_log("INFO", &format!("✔雅贝那−: {}", n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
+                                                        Err(e) => edit_state.add_log("ERROR", &format!("移除雅贝那失质 {}", e)),
                                                     }
                                                 }
                                             });
@@ -1858,7 +1858,7 @@ impl ModifierApp {
                                                 });
                                                 ui.horizontal(|ui| {
                                                     let _ = ui.button("[+1]");
-                                                    let _ = ui.button("[�?]");
+                                                    let _ = ui.button("[−]");
                                                 });
                                             });
                                             ui.colored_label(egui::Color32::from_rgb(200, 150, 0), t("warhorn_wip", &lang));
@@ -1887,7 +1887,7 @@ impl ModifierApp {
                                 }
                                 if ui.button(t("copy_logs", &lang)).clicked() {
                                     ui.output_mut(|o| o.copied_text = edit_state.log_buffer.clone());
-                                    edit_state.add_log("INFO", "�?日志已复制到剪贴�?);
+                                    edit_state.add_log("INFO", "✔日志已复制到剪贴板");
                                 }
                             });
                             ui.separator();
@@ -1919,10 +1919,10 @@ impl ModifierApp {
         ui.separator();
         ui.horizontal(|ui| {
             if let Some(msg) = &self.success_message {
-                ui.colored_label(egui::Color32::GREEN, format!("�?{}", msg));
+                ui.colored_label(egui::Color32::GREEN, format!("✔{}", msg));
             }
             if let Some(err) = &self.error_message {
-                ui.colored_label(egui::Color32::RED, format!("�?{}", err));
+                ui.colored_label(egui::Color32::RED, format!("❌{}", err));
             }
         });
 
@@ -2074,8 +2074,8 @@ impl ModifierApp {
                             class_info.level,
                         ) {
                             Ok(_) => {
-                                edit_state.add_log("INFO", &format!("�?兵种已修�? {} �?{}", class_info.name, new_code));
-                                edit_state.add_log("INFO", "�?技能已清空");
+                                edit_state.add_log("INFO", &format!("✔兵种已修改 {} →{}", class_info.name, new_code));
+                                edit_state.add_log("INFO", "✔技能已清空");
                                 if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) {
                                     *recruited_heroes = heroes;
                                 }
@@ -2083,7 +2083,7 @@ impl ModifierApp {
                             }
                             Err(e) => {
                                 edit_state.add_log("ERROR", &format!("修改失败: {}", e));
-                                edit_state.add_log("WARN", &format!("ID:{} �?{}", class_info.record_id, new_code));
+                                edit_state.add_log("WARN", &format!("ID:{} →{}", class_info.record_id, new_code));
                             }
                         }
                     }
@@ -2099,7 +2099,7 @@ impl ModifierApp {
 
                 for entry in class_dictionary::CLASS_DICTIONARY.iter() {
                     ui.horizontal(|ui| {
-                        if ui.add(egui::Button::new("�?).small()).clicked() {
+                        if ui.add(egui::Button::new("⚠").small()).clicked() {
                             edit_state.new_class_text = entry.code.to_string();
                             edit_state.add_log("INFO", &format!("选择: {}", entry.chinese_name));
                         }
@@ -2165,16 +2165,16 @@ impl ModifierApp {
                         old_level,
                     ) {
                         Ok(_) => {
-                            edit_state.add_log("INFO", &format!("�?装备已修�? {} �?{}", old_name, new_code));
+                            edit_state.add_log("INFO", &format!("✔装备已修改 {} →{}", old_name, new_code));
                             if old_name.contains("Cornucopia") || new_code.contains("Cornucopia") {
-                                edit_state.add_log("INFO", "⚠️ 操作涉及雅贝那：建议重启游戏以刷新效�?);
+                                edit_state.add_log("INFO", "⚠️ 操作涉及雅贝那：建议重启游戏以刷新效果");
                             }
                             edit_state.new_item_text.clear();
                         }
                         Err(e) => {
                             edit_state.add_log("ERROR", &format!("修改失败: {}", e));
                             if let Some(ref item_info) = details.item_info {
-                                edit_state.add_log("WARN", &format!("ID:{} �?{}", item_info.record_id, new_code));
+                                edit_state.add_log("WARN", &format!("ID:{} →{}", item_info.record_id, new_code));
                             }
                         }
                     }
@@ -2186,7 +2186,7 @@ impl ModifierApp {
                     let old_name = details.item_info.as_ref().map_or("", |i| i.name.as_str()).to_string();
                     match SaveManager::clear_hero_upgrade(json_data, hero_key, "itemUpgrade") {
                         Ok(_) => {
-                            edit_state.add_log("INFO", &format!("�?已移除装�? {}", old_name));
+                            edit_state.add_log("INFO", &format!("✔已移除装备 {}", old_name));
                         }
                         Err(e) => {
                             edit_state.add_log("ERROR", &format!("移除装备失败: {}", e));
@@ -2206,7 +2206,7 @@ impl ModifierApp {
             for entry in upgrade_dictionary::UPGRADE_DICTIONARY.iter() {
                 let is_consumable = entry.code == CORNUCOPIA_UPGRADE_CODE;
                 ui.horizontal(|ui| {
-                    if ui.add_enabled(!is_consumable, egui::Button::new("�?).small())
+                    if ui.add_enabled(!is_consumable, egui::Button::new("⚠").small())
                         .on_hover_text("复制到输入框")
                         .clicked() {
                         edit_state.new_item_text = entry.code.to_string();
@@ -2226,11 +2226,11 @@ impl ModifierApp {
             }
 
             ui.separator();
-            ui.label(egui::RichText::new("融合�?- 专属装备").strong());
+            ui.label(egui::RichText::new("融合物- 专属装备").strong());
             let fusion_label = if edit_state.fusion_items_expanded {
-                "�?展开"
+                "▶展开"
             } else {
-                "�?展开"
+                "▶展开"
             };
             if ui.button(fusion_label).clicked() {
                 edit_state.fusion_items_expanded = !edit_state.fusion_items_expanded;
@@ -2245,7 +2245,7 @@ impl ModifierApp {
 
                 for entry in upgrade_dictionary::ITEM_DICTIONARY_FUSION.iter() {
                     ui.horizontal(|ui| {
-                        if ui.add(egui::Button::new("�?).small())
+                        if ui.add(egui::Button::new("⚠").small())
                             .on_hover_text("复制到输入框")
                             .clicked() {
                             edit_state.new_item_text = entry.code.to_string();
@@ -2308,16 +2308,16 @@ impl ModifierApp {
                         old_level,
                     ) {
                         Ok(_) => {
-                            edit_state.add_log("INFO", &format!("�?特质已修�? {} �?{}", old_name, new_code));
+                            edit_state.add_log("INFO", &format!("✔特质已修改 {} →{}", old_name, new_code));
                             if old_name.contains("Cornucopia") || new_code.contains("Cornucopia") {
-                                edit_state.add_log("INFO", "⚠️ 操作涉及雅贝那：建议重启游戏以刷新效�?);
+                                edit_state.add_log("INFO", "⚠️ 操作涉及雅贝那：建议重启游戏以刷新效果");
                             }
                             edit_state.new_trait_text.clear();
                         }
                         Err(e) => {
                             edit_state.add_log("ERROR", &format!("修改失败: {}", e));
                             if let Some(ref trait_info) = details.trait_info {
-                                edit_state.add_log("WARN", &format!("ID:{} �?{}", trait_info.record_id, new_code));
+                                edit_state.add_log("WARN", &format!("ID:{} →{}", trait_info.record_id, new_code));
                             }
                         }
                     }
@@ -2329,7 +2329,7 @@ impl ModifierApp {
                     let old_name = details.trait_info.as_ref().map_or("", |t| t.name.as_str()).to_string();
                     match SaveManager::clear_hero_upgrade(json_data, hero_key, "traitUpgrade") {
                         Ok(_) => {
-                            edit_state.add_log("INFO", &format!("�?已移除特�? {}", old_name));
+                            edit_state.add_log("INFO", &format!("✔已移除特败 {}", old_name));
                         }
                         Err(e) => {
                             edit_state.add_log("ERROR", &format!("移除特质失败: {}", e));
@@ -2348,7 +2348,7 @@ impl ModifierApp {
 
             for entry in upgrade_dictionary::TRAIT_DICTIONARY.iter() {
                 ui.horizontal(|ui| {
-                    if ui.add(egui::Button::new("�?).small()).clicked() {
+                    if ui.add(egui::Button::new("⚠").small()).clicked() {
                         edit_state.new_trait_text = entry.code.to_string();
                         edit_state.add_log("INFO", &format!("选择: {}", entry.chinese_name));
                     }
@@ -2363,11 +2363,11 @@ impl ModifierApp {
             }
 
             ui.separator();
-            ui.label(egui::RichText::new("旧灰复燃的战�?- 专属特质").strong());
+            ui.label(egui::RichText::new("旧灰复燃的战旗- 专属特质").strong());
             let flag_label = if edit_state.oldgrey_flag_traits_expanded {
-                "�?展开"
+                "▶展开"
             } else {
-                "�?展开"
+                "▶展开"
             };
             if ui.button(flag_label).clicked() {
                 edit_state.oldgrey_flag_traits_expanded = !edit_state.oldgrey_flag_traits_expanded;
@@ -2382,7 +2382,7 @@ impl ModifierApp {
 
                 for entry in upgrade_dictionary::TRAIT_DICTIONARY_OLDGREY_FLAG.iter() {
                     ui.horizontal(|ui| {
-                        if ui.add(egui::Button::new("�?).small()).clicked() {
+                        if ui.add(egui::Button::new("⚠").small()).clicked() {
                             edit_state.new_trait_text = entry.code.to_string();
                             edit_state.add_log("INFO", &format!("选择: {}", entry.chinese_name));
                         }
@@ -2398,11 +2398,11 @@ impl ModifierApp {
             }
 
             ui.separator();
-            ui.label(egui::RichText::new("融合�?- 专属特质").strong());
+            ui.label(egui::RichText::new("融合物- 专属特质").strong());
             let fusion_label = if edit_state.fusion_traits_expanded {
-                "�?展开"
+                "▶展开"
             } else {
-                "�?展开"
+                "▶展开"
             };
             if ui.button(fusion_label).clicked() {
                 edit_state.fusion_traits_expanded = !edit_state.fusion_traits_expanded;
@@ -2417,7 +2417,7 @@ impl ModifierApp {
 
                 for entry in upgrade_dictionary::TRAIT_DICTIONARY_FUSION.iter() {
                     ui.horizontal(|ui| {
-                        if ui.add(egui::Button::new("�?).small()).clicked() {
+                        if ui.add(egui::Button::new("⚠").small()).clicked() {
                             edit_state.new_trait_text = entry.code.to_string();
                             edit_state.add_log("INFO", &format!("选择: {}", entry.chinese_name));
                         }
@@ -2439,7 +2439,7 @@ impl ModifierApp {
         let editor_exe = match &self.editor_exe {
             Some(exe) => exe.clone(),
             None => {
-                self.error_message = Some("尚未选择编辑�?EXE".to_string());
+                self.error_message = Some("尚未选择编辑器EXE".to_string());
                 return;
             }
         };
@@ -2447,7 +2447,7 @@ impl ModifierApp {
             Ok(json_data) => {
                 match SaveManager::get_recruited_heroes(&json_data) {
                     Ok(recruited_heroes) => {
-                        info!("已从存档加载 {} 个英�?, recruited_heroes.len());
+                        info!("已从存档加载 {} 个英雄", recruited_heroes.len());
 
                         self.state = AppState::Editing {
                             json_data,
@@ -2459,7 +2459,7 @@ impl ModifierApp {
                         };
 
                         self.error_message = None;
-                        self.success_message = Some("�?存档加载成功�?.to_string());
+                        self.success_message = Some("✔存档加载成功！".to_string());
                         self.message_timeout = 3.0;
                     }
                     Err(e) => {
@@ -2479,7 +2479,7 @@ impl ModifierApp {
         if let AppState::Editing { ref json_data, .. } = self.state {
             match SaveManager::export_json(json_data, export_path) {
                 Ok(()) => {
-                    self.success_message = Some(format!("�?JSON 已导�?));
+                    self.success_message = Some(format!("✔JSON 已导出"));
                     self.error_message = None;
                     self.message_timeout = 3.0;
                 }
@@ -2495,7 +2495,7 @@ impl ModifierApp {
         let editor_exe = match &self.editor_exe {
             Some(exe) => exe.clone(),
             None => {
-                self.error_message = Some("尚未选择编辑�?EXE".to_string());
+                self.error_message = Some("尚未选择编辑器EXE".to_string());
                 return;
             }
         };
@@ -2508,10 +2508,10 @@ impl ModifierApp {
         {
             match SaveManager::save_save(save_path, json_data, &editor_exe) {
                 Ok(()) => {
-                    self.success_message = Some("�?存档已保存！".to_string());
+                    self.success_message = Some("✔存档已保存！".to_string());
                     self.error_message = None;
                     self.message_timeout = 3.0;
-                    edit_state.add_log("INFO", "�?存档已成功转换为二进�?);
+                    edit_state.add_log("INFO", "✔存档已成功转换为二进制");
                 }
                 Err(e) => {
                     let detail = format!("{:#}", e);
@@ -2540,13 +2540,13 @@ impl ModifierApp {
             match SaveManager::get_recruited_heroes(json_data) {
                 Ok(updated_heroes) => {
                     *recruited_heroes = updated_heroes;
-                    edit_state.add_log("INFO", "�?已重新加载所有英雄数�?);
+                    edit_state.add_log("INFO", "✔已重新加载所有英雄数据");
 
                     if let Some(key) = selected_hero_key.clone() {
                         match SaveManager::get_hero_details(json_data, &key) {
                             Ok(updated_details) => {
                                 *hero_details = Some(updated_details);
-                                edit_state.add_log("INFO", "�?已刷新所选英雄的最新状�?);
+                                edit_state.add_log("INFO", "✔已刷新所选英雄的最新状态");
                             }
                             Err(e) => {
                                 edit_state.add_log("WARN", &format!("刷新英雄详情失败: {}", e));
