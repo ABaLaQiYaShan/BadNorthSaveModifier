@@ -1942,6 +1942,61 @@ impl SaveManager {
             .map(|(_, count)| count)
             .sum()
     }
+
+    pub fn replace_inventory_item(json_value: &mut Value, old_code: &str, new_code: &str) -> Result<i32> {
+        let (_, array_id) = Self::find_inventory_refs(json_value)?;
+        
+        // First pass: collect all ref_ids that need to be replaced
+        let mut ref_ids_to_replace: Vec<i64> = Vec::new();
+        {
+            if let Some(values) = json_value["records"][&array_id.to_string()]["values"].as_array() {
+                for entry in values.iter() {
+                    if entry["type"].as_str() == Some("Reference") {
+                        if let Some(ref_id) = entry["id"].as_i64() {
+                            let ref_id_str = ref_id.to_string();
+                            if let Some(record) = json_value["records"][&ref_id_str].as_object() {
+                                if let Some(members) = record.get("members").and_then(|m| m.as_array()) {
+                                    for member in members.iter() {
+                                        if member.get("name").and_then(|n| n.as_str()) == Some("name") {
+                                            if member.get("value").and_then(|v| v.as_str()) == Some(old_code) {
+                                                ref_ids_to_replace.push(ref_id);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Second pass: perform the replacements
+        let mut count = 0;
+        for ref_id in ref_ids_to_replace {
+            let ref_id_str = ref_id.to_string();
+            if let Some(record) = json_value["records"][&ref_id_str].as_object_mut() {
+                if let Some(members) = record.get_mut("members").and_then(|m| m.as_array_mut()) {
+                    for member in members.iter_mut() {
+                        if member.get("name").and_then(|n| n.as_str()) == Some("name") {
+                            if member.get("value").and_then(|v| v.as_str()) == Some(old_code) {
+                                member["value"] = Value::String(new_code.to_string());
+                                count += 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if count == 0 {
+            return Err(anyhow!("未找到装备 {}", old_code));
+        }
+
+        info!("背包中已将 {}(× {}) 替换为 {}", old_code, count, new_code);
+        Ok(count)
+    }
 }
 
 #[derive(Debug, Clone, Default)]

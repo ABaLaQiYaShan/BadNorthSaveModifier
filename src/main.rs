@@ -1,5 +1,6 @@
 use eframe::egui;
 use std::path::PathBuf;
+use std::collections::HashMap;
 use log::{info, error, warn};
 use serde_json::Value;
 
@@ -84,6 +85,8 @@ struct EditState {
     fusion_items_expanded: bool,
     mod_items_expanded: bool,
     mod_traits_expanded: bool,
+    fusion_item_inputs: HashMap<String, String>,
+    mod_item_inputs: HashMap<String, String>,
 }
 
 impl Default for EditState {
@@ -112,6 +115,8 @@ impl Default for EditState {
             fusion_items_expanded: false,
             mod_items_expanded: false,
             mod_traits_expanded: false,
+            fusion_item_inputs: HashMap::new(),
+            mod_item_inputs: HashMap::new(),
         }
     }
 }
@@ -1862,11 +1867,185 @@ impl ModifierApp {
                                     });
 
                                     ui.add_space(8.0);
+
+                                    // ===== 融合版- 专属装备 =====
+                                    let fusion_base = "融合版- 专属装备";
+                                    let fusion_label = if edit_state.fusion_items_expanded {
+                                        format!("{} ▼", fusion_base)
+                                    } else {
+                                        format!("{} ▶", fusion_base)
+                                    };
+                                    if ui.button(egui::RichText::new(fusion_label).strong()).clicked() {
+                                        edit_state.fusion_items_expanded = !edit_state.fusion_items_expanded;
+                                    }
+                                    
+                                    if edit_state.fusion_items_expanded {
+                                        for entry in upgrade_dictionary::ITEM_DICTIONARY_FUSION.iter() {
+                                            let input_key = format!("fusion_{}", entry.code);
+                                            let input_value = edit_state.fusion_item_inputs.get(&input_key).cloned().unwrap_or_default();
+                                            
+                                            egui::Frame::group(ui.style()).show(ui, |ui| {
+                                                ui.vertical(|ui| {
+                                                    ui.label(egui::RichText::new(entry.chinese_name).strong().heading());
+                                                    ui.separator();
+                                                    
+                                                    let current_count = SaveManager::get_all_inventory_items(json_data).iter()
+                                                        .find(|(code, _)| code == entry.code)
+                                                        .map(|(_, count)| *count)
+                                                        .unwrap_or(0);
+                                                    
+                                                    ui.horizontal(|ui| {
+                                                        ui.label(t("inv_total", &lang));
+                                                        ui.monospace(egui::RichText::new(current_count.to_string()).color(egui::Color32::GOLD));
+                                                        ui.separator();
+                                                        ui.label(t("inv_item_code", &lang));
+                                                        ui.monospace(egui::RichText::new(entry.code).color(egui::Color32::from_rgb(34, 139, 34)));
+                                                        if ui.add(egui::Button::new("📋").small()).on_hover_text(entry.code).clicked() {
+                                                            ui.output_mut(|o| o.copied_text = entry.code.to_string());
+                                                            edit_state.add_log("INFO", &format!("📋 已复制 {}", entry.code));
+                                                        }
+                                                    });
+                                                    
+                                                    ui.separator();
+                                                    
+                                                    let mut input_str = input_value;
+                                                    ui.horizontal(|ui| {
+                                                        ui.label(t("inv_set_count", &lang));
+                                                        ui.text_edit_singleline(&mut input_str);
+                                                        if ui.button(t("apply_btn", &lang)).clicked() {
+                                                            if let Ok(n) = input_str.parse::<i32>() {
+                                                                let current_total = SaveManager::get_total_inventory_count(json_data);
+                                                                let to_add = (n - current_count).max(0);
+                                                                if to_add > 0 && current_total + to_add > 20 {
+                                                                    edit_state.add_log("ERROR", &format!("❌设置失败：总数会超过容量（{} + {} > 20）", current_total, to_add));
+                                                                } else {
+                                                                    match SaveManager::set_item_count(json_data, entry.code, n) {
+                                                                        Ok(_) => {
+                                                                            edit_state.add_log("INFO", &format!("✔{} 已设置为 {}", entry.chinese_name, n));
+                                                                            edit_state.fusion_item_inputs.insert(input_key.clone(), String::new());
+                                                                            if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = heroes; }
+                                                                        }
+                                                                        Err(e) => edit_state.add_log("ERROR", &format!("修改 {} 失败: {}", entry.chinese_name, e)),
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+                                                    edit_state.fusion_item_inputs.insert(input_key, input_str);
+                                                    
+                                                    ui.horizontal(|ui| {
+                                                        if ui.button("[+1]").clicked() {
+                                                            match SaveManager::increment_item_count(json_data, entry.code) {
+                                                                Ok(n) => { edit_state.add_log("INFO", &format!("✔{} +1: {}", entry.chinese_name, n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
+                                                                Err(e) => edit_state.add_log("ERROR", &format!("添加 {} 失败: {}", entry.chinese_name, e)),
+                                                            }
+                                                        }
+                                                        if ui.button("[-1]").clicked() {
+                                                            match SaveManager::decrement_item_count(json_data, entry.code) {
+                                                                Ok(n) => { edit_state.add_log("INFO", &format!("✔{} -1: {}", entry.chinese_name, n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
+                                                                Err(e) => edit_state.add_log("ERROR", &format!("移除 {} 失败: {}", entry.chinese_name, e)),
+                                                            }
+                                                        }
+                                                    });
+                                                });
+                                            });
+                                            ui.add_space(8.0);
+                                        }
+                                    }
+
+                                    ui.add_space(8.0);
+
+                                    // ===== 魔改版- 专属装备 =====
+                                    let mod_base = "魔改版- 专属装备";
+                                    let mod_label = if edit_state.mod_items_expanded {
+                                        format!("{} ▼", mod_base)
+                                    } else {
+                                        format!("{} ▶", mod_base)
+                                    };
+                                    if ui.button(egui::RichText::new(mod_label).strong()).clicked() {
+                                        edit_state.mod_items_expanded = !edit_state.mod_items_expanded;
+                                    }
+                                    
+                                    if edit_state.mod_items_expanded {
+                                        for entry in upgrade_dictionary::ITEM_DICTIONARY_MOD_VERSION.iter() {
+                                            let input_key = format!("mod_{}", entry.code);
+                                            let input_value = edit_state.mod_item_inputs.get(&input_key).cloned().unwrap_or_default();
+                                            
+                                            egui::Frame::group(ui.style()).show(ui, |ui| {
+                                                ui.vertical(|ui| {
+                                                    ui.label(egui::RichText::new(entry.chinese_name).strong().heading());
+                                                    ui.separator();
+                                                    
+                                                    let current_count = SaveManager::get_all_inventory_items(json_data).iter()
+                                                        .find(|(code, _)| code == entry.code)
+                                                        .map(|(_, count)| *count)
+                                                        .unwrap_or(0);
+                                                    
+                                                    ui.horizontal(|ui| {
+                                                        ui.label(t("inv_total", &lang));
+                                                        ui.monospace(egui::RichText::new(current_count.to_string()).color(egui::Color32::GOLD));
+                                                        ui.separator();
+                                                        ui.label(t("inv_item_code", &lang));
+                                                        ui.monospace(egui::RichText::new(entry.code).color(egui::Color32::from_rgb(34, 139, 34)));
+                                                        if ui.add(egui::Button::new("📋").small()).on_hover_text(entry.code).clicked() {
+                                                            ui.output_mut(|o| o.copied_text = entry.code.to_string());
+                                                            edit_state.add_log("INFO", &format!("📋 已复制 {}", entry.code));
+                                                        }
+                                                    });
+                                                    
+                                                    ui.separator();
+                                                    
+                                                    let mut input_str = input_value;
+                                                    ui.horizontal(|ui| {
+                                                        ui.label(t("inv_set_count", &lang));
+                                                        ui.text_edit_singleline(&mut input_str);
+                                                        if ui.button(t("apply_btn", &lang)).clicked() {
+                                                            if let Ok(n) = input_str.parse::<i32>() {
+                                                                let current_total = SaveManager::get_total_inventory_count(json_data);
+                                                                let to_add = (n - current_count).max(0);
+                                                                if to_add > 0 && current_total + to_add > 20 {
+                                                                    edit_state.add_log("ERROR", &format!("❌设置失败：总数会超过容量（{} + {} > 20）", current_total, to_add));
+                                                                } else {
+                                                                    match SaveManager::set_item_count(json_data, entry.code, n) {
+                                                                        Ok(_) => {
+                                                                            edit_state.add_log("INFO", &format!("✔{} 已设置为 {}", entry.chinese_name, n));
+                                                                            edit_state.mod_item_inputs.insert(input_key.clone(), String::new());
+                                                                            if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = heroes; }
+                                                                        }
+                                                                        Err(e) => edit_state.add_log("ERROR", &format!("修改 {} 失败: {}", entry.chinese_name, e)),
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+                                                    edit_state.mod_item_inputs.insert(input_key, input_str);
+                                                    
+                                                    ui.horizontal(|ui| {
+                                                        if ui.button("[+1]").clicked() {
+                                                            match SaveManager::increment_item_count(json_data, entry.code) {
+                                                                Ok(n) => { edit_state.add_log("INFO", &format!("✔{} +1: {}", entry.chinese_name, n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
+                                                                Err(e) => edit_state.add_log("ERROR", &format!("添加 {} 失败: {}", entry.chinese_name, e)),
+                                                            }
+                                                        }
+                                                        if ui.button("[-1]").clicked() {
+                                                            match SaveManager::decrement_item_count(json_data, entry.code) {
+                                                                Ok(n) => { edit_state.add_log("INFO", &format!("✔{} -1: {}", entry.chinese_name, n)); if let Ok(h) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = h; } }
+                                                                Err(e) => edit_state.add_log("ERROR", &format!("移除 {} 失败: {}", entry.chinese_name, e)),
+                                                            }
+                                                        }
+                                                    });
+                                                });
+                                            });
+                                            ui.add_space(8.0);
+                                        }
+                                    }
+                                    ui.add_space(8.0);
                                     });
                                 });
                             }
-                        }
-                    },
+
+                    }
+                }
                 );
             });
 
