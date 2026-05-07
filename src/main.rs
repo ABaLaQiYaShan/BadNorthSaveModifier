@@ -441,6 +441,8 @@ fn t(key: &str, lang: &Language) -> &'static str {
             "browse_save"   => "浏览并选择存档文件",
             "editor_label"  => "编辑器：",
             "reselect_exe"  => "重新选择编辑器EXE",
+            "editor_exe_found" => "已识别到指定exe文件",
+            "editor_exe_hint" => "如需修改BadNorthSaveRustEditor.exe或BadNorthSaveconverter.exe的地址，请去\"设置\"内修改或重置",
 
             "show_logs"     => "显示日志",
             "hide_logs"     => "隐藏日志",
@@ -451,7 +453,7 @@ fn t(key: &str, lang: &Language) -> &'static str {
 
             "heroes"        => "英雄",
             "coin_bank"     => "货币 (coinBank) 修改",
-            "grail_count"   => "圣杯数量修改",
+            "grail_count"   => "圣杯(Grail)",
             "total_grails"  => "总数:",
             "grail_on_hero" => "已被装备数",
             "grail_in_inv"  => "未被装备数",
@@ -561,6 +563,8 @@ fn t(key: &str, lang: &Language) -> &'static str {
             "browse_save"   => "Browse & Select Save File",
             "editor_label"  => "Editor:",
             "reselect_exe"  => "Re-select Editor EXE",
+            "editor_exe_found" => "Editor exe file detected",
+            "editor_exe_hint" => "To change the address of BadNorthSaveRustEditor.exe or BadNorthSaveconverter.exe, go to \"Settings\" to modify or reset",
 
             "show_logs"     => "Show Logs",
             "hide_logs"     => "Hide Logs",
@@ -571,7 +575,7 @@ fn t(key: &str, lang: &Language) -> &'static str {
 
             "heroes"        => "Heroes",
             "coin_bank"     => "Currency (coinBank) Edit",
-            "grail_count"   => "Grail Count Edit",
+            "grail_count"   => "Grail (Grail)",
             "total_grails"  => "Total:",
             "grail_on_hero" => "Equipped:",
             "grail_in_inv"  => "Unequipped:",
@@ -819,10 +823,22 @@ impl ModifierApp {
             if let Some(exe) = &self.editor_exe {
                 ui.label(format!("{} {}", t("editor_label", &self.app_settings.language), exe.display()));
                 ui.add_space(10.0);
-                if ui.button(t("reselect_exe", &self.app_settings.language)).clicked() {
-                    self.state = AppState::SelectEditorExe;
-                    return;
+                
+                // 判断编辑器是否存在
+                let exe_valid = exe.is_file();
+                if exe_valid {
+                    // 编辑器存在，显示灰化按钮和提示文字
+                    ui.add_enabled(false, egui::Button::new(t("editor_exe_found", &self.app_settings.language)));
+                    ui.add_space(8.0);
+                    ui.colored_label(egui::Color32::GRAY, t("editor_exe_hint", &self.app_settings.language));
+                } else {
+                    // 编辑器不存在，显示可点击按钮
+                    if ui.button(t("reselect_exe", &self.app_settings.language)).clicked() {
+                        self.state = AppState::SelectEditorExe;
+                        return;
+                    }
                 }
+                
                 ui.add_space(20.0);
             }
 
