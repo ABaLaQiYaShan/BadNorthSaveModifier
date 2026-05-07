@@ -82,6 +82,8 @@ struct EditState {
     oldgrey_flag_traits_expanded: bool,
     fusion_traits_expanded: bool,
     fusion_items_expanded: bool,
+    mod_items_expanded: bool,
+    mod_traits_expanded: bool,
 }
 
 impl Default for EditState {
@@ -108,6 +110,8 @@ impl Default for EditState {
             oldgrey_flag_traits_expanded: false,
             fusion_traits_expanded: false,
             fusion_items_expanded: false,
+            mod_items_expanded: false,
+            mod_traits_expanded: false,
         }
     }
 }
@@ -460,7 +464,7 @@ fn t(key: &str, lang: &Language) -> &'static str {
             "apply_btn"     => "应用",
             "clear_logs"    => "清空",
             "copy_logs"     => "全选并复制",
-            "select_hero"   => "从左侧列表选择英雄",
+            "select_hero"   => "从左侧列表选择修改功能",
             "abnormal_data" => "英雄数据异常",
             "grail_wip"     => "背包装备管理功能完善中，敬请期待",
 
@@ -580,7 +584,7 @@ fn t(key: &str, lang: &Language) -> &'static str {
             "apply_btn"     => "Apply",
             "clear_logs"    => "Clear",
             "copy_logs"     => "Select All & Copy",
-            "select_hero"   => "→Select a hero from the left",
+            "select_hero"   => "→Select a function from the left",
             "abnormal_data" => "Hero data is abnormal",
             "grail_wip"     => "Inventory equipment management coming soon, stay tuned",
 
@@ -2327,6 +2331,70 @@ impl ModifierApp {
                 }
             }
 
+            ui.separator();
+            ui.label(egui::RichText::new("魔改版- 专属装备").strong());
+            let mod_label = if edit_state.mod_items_expanded {
+                t("collapse_label", language)
+            } else {
+                t("expand_label", language)
+            };
+            let is_mod_active = edit_state.mod_items_expanded;
+            if ui.selectable_label(is_mod_active, mod_label).clicked() {
+                edit_state.mod_items_expanded = !edit_state.mod_items_expanded;
+            }
+
+            if edit_state.mod_items_expanded {
+
+                ui.horizontal(|ui| {
+                    ui.small(egui::RichText::new(t("quick_apply", language)).small().strong());
+                    ui.small(egui::RichText::new("复制").small().strong());
+                });
+
+                for entry in upgrade_dictionary::ITEM_DICTIONARY_MOD_VERSION.iter() {
+                    ui.horizontal(|ui| {
+                        if ui.add(egui::Button::new("⚡").small())
+                            .on_hover_text(t("quick_apply_hint", language))
+                            .clicked() {
+                            let old_name = details.item_info.as_ref().map_or("", |i| i.name.as_str()).to_string();
+                            let old_level = details.item_info.as_ref().map_or(0, |i| i.level);
+                            match SaveManager::modify_hero_upgrade(
+                                json_data,
+                                hero_key,
+                                "itemUpgrade",
+                                entry.code,
+                                old_level,
+                            ) {
+                                Ok(_) => {
+                                    edit_state.add_log("INFO", &format!("✔装备已修改 {} →{}", old_name, entry.chinese_name));
+                                    if old_name.contains("Cornucopia") || entry.code.contains("Cornucopia") {
+                                        edit_state.add_log("INFO", "⚠️ 操作涉及雅贝那：建议重启游戏以刷新效果");
+                                    }
+                                    if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) {
+                                        *recruited_heroes = heroes;
+                                        if let Some(updated_hero) = recruited_heroes.iter().find(|h| h.key == hero_key).cloned() {
+                                            *hero_details = Some(updated_hero);
+                                        }
+                                    }
+                                }
+                                Err(e) => {
+                                    edit_state.add_log("ERROR", &format!("修改失败: {}", e));
+                                    if let Some(ref item_info) = details.item_info {
+                                        edit_state.add_log("WARN", &format!("ID:{} →{}", item_info.record_id, entry.code));
+                                    }
+                                }
+                            }
+                        }
+                        if ui.add(egui::Button::new("📋").small())
+                            .on_hover_text("复制代码到剪贴板")
+                            .clicked() {
+                            ui.output_mut(|o| o.copied_text = entry.code.to_string());
+                        }
+                        ui.monospace(entry.code);
+                        ui.label(entry.chinese_name);
+                    });
+                }
+            }
+
         });
     }
 
@@ -2546,6 +2614,70 @@ impl ModifierApp {
                 });
 
                 for entry in upgrade_dictionary::TRAIT_DICTIONARY_FUSION.iter() {
+                    ui.horizontal(|ui| {
+                        if ui.add(egui::Button::new("⚡").small())
+                            .on_hover_text(t("quick_apply_hint", language))
+                            .clicked() {
+                            let old_name = details.trait_info.as_ref().map_or("", |t| t.name.as_str()).to_string();
+                            let old_level = details.trait_info.as_ref().map_or(0, |t| t.level);
+                            match SaveManager::modify_hero_upgrade(
+                                json_data,
+                                hero_key,
+                                "traitUpgrade",
+                                entry.code,
+                                old_level,
+                            ) {
+                                Ok(_) => {
+                                    edit_state.add_log("INFO", &format!("✔特质已修改 {} →{}", old_name, entry.chinese_name));
+                                    if old_name.contains("Cornucopia") || entry.code.contains("Cornucopia") {
+                                        edit_state.add_log("INFO", "⚠️ 操作涉及雅贝那：建议重启游戏以刷新效果");
+                                    }
+                                    if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) {
+                                        *recruited_heroes = heroes;
+                                        if let Some(updated_hero) = recruited_heroes.iter().find(|h| h.key == hero_key).cloned() {
+                                            *hero_details = Some(updated_hero);
+                                        }
+                                    }
+                                }
+                                Err(e) => {
+                                    edit_state.add_log("ERROR", &format!("修改失败: {}", e));
+                                    if let Some(ref trait_info) = details.trait_info {
+                                        edit_state.add_log("WARN", &format!("ID:{} →{}", trait_info.record_id, entry.code));
+                                    }
+                                }
+                            }
+                        }
+                        if ui.add(egui::Button::new("📋").small())
+                            .on_hover_text("复制代码到剪贴板")
+                            .clicked() {
+                            ui.output_mut(|o| o.copied_text = entry.code.to_string());
+                        }
+                        ui.monospace(entry.code);
+                        ui.label(entry.chinese_name);
+                    });
+                }
+            }
+
+            ui.separator();
+            ui.label(egui::RichText::new("魔改版- 专属特质").strong());
+            let mod_label = if edit_state.mod_traits_expanded {
+                t("collapse_label", language)
+            } else {
+                t("expand_label", language)
+            };
+            let is_mod_active = edit_state.mod_traits_expanded;
+            if ui.selectable_label(is_mod_active, mod_label).clicked() {
+                edit_state.mod_traits_expanded = !edit_state.mod_traits_expanded;
+            }
+
+            if edit_state.mod_traits_expanded {
+
+                ui.horizontal(|ui| {
+                    ui.small(egui::RichText::new(t("quick_apply", language)).small().strong());
+                    ui.small(egui::RichText::new("复制").small().strong());
+                });
+
+                for entry in upgrade_dictionary::TRAIT_DICTIONARY_MOD_VERSION.iter() {
                     ui.horizontal(|ui| {
                         if ui.add(egui::Button::new("⚡").small())
                             .on_hover_text(t("quick_apply_hint", language))

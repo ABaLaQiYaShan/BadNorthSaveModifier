@@ -43,8 +43,18 @@ pub const ITEM_DICTIONARY_ORIGINAL: &[UpgradeEntry] = &[
 /// 装备 · 融合版（新增）
 /// 《旧恢复燃的战旗 · 融合版》中新增的装备
 pub const ITEM_DICTIONARY_FUSION_NEW: &[UpgradeEntry] = &[
-    UpgradeEntry { code: "Hero_Item_Charge",       chinese_name: "盾冲",     initial_level: 1 },
-    UpgradeEntry { code: "Hero_Item_DeathZone",    chinese_name: "死亡区域", initial_level: 1 },
+    UpgradeEntry { code: "Hero_Item_Charge",       chinese_name: "盾冲",     initial_level: 0 },
+    UpgradeEntry { code: "Hero_Item_DeathZone",    chinese_name: "死亡区域", initial_level: 0 },
+    UpgradeEntry { code: "Hero_Upgrade_FrontArmor", chinese_name: "正面护甲", initial_level: 0 },
+    UpgradeEntry { code: "Hero_Upgrade_SpeedUp",    chinese_name: "心灵加速器", initial_level: 0 },
+];
+
+/// 装备 · 魔改版（专属集合）
+/// 魔改版专属的装备集合
+pub const ITEM_DICTIONARY_MOD_VERSION: &[UpgradeEntry] = &[
+    UpgradeEntry { code: "Hero_Item_Charge",       chinese_name: "盾冲",     initial_level: 0 },
+    UpgradeEntry { code: "Hero_Upgrade_FrontArmor", chinese_name: "正面护甲", initial_level: 0 },
+    UpgradeEntry { code: "Hero_Upgrade_SpeedUp",    chinese_name: "心灵加速器", initial_level: 0 },
 ];
 
 // ==================== 特质字典 (Traits) ====================
@@ -72,15 +82,15 @@ pub const TRAIT_DICTIONARY_ORIGINAL: &[UpgradeEntry] = &[
 /// 《旧恢复燃的战旗》独占的特质（仅在旧版DLC中有效，融合版已删除）
 /// 不推荐用于新游戏，这些特质在融合版中被重新设计
 pub const TRAIT_DICTIONARY_OLDGREY_FLAG_LEGACY: &[UpgradeEntry] = &[
-    UpgradeEntry { code: "Hero_Trait_AxeThrower",        chinese_name: "[旧]掷斧手",       initial_level: 0 },
-    UpgradeEntry { code: "Hero_Trait_CheaperClass",      chinese_name: "[旧]迅捷精英",     initial_level: 0 },
-    UpgradeEntry { code: "Hero_Trait_Regenerative",      chinese_name: "[旧]追猎",         initial_level: 0 },
-    UpgradeEntry { code: "Hero_Trait_Thorns",            chinese_name: "[旧]荆棘",         initial_level: 0 },
+    UpgradeEntry { code: "Hero_Trait_AxeThrower",        chinese_name: "掷斧手",       initial_level: 0 },
+    UpgradeEntry { code: "Hero_Trait_CheaperClass",      chinese_name: "迅捷精英",     initial_level: 0 },
+    UpgradeEntry { code: "Hero_Trait_Regenerative",      chinese_name: "追猎",         initial_level: 0 },
+    UpgradeEntry { code: "Hero_Trait_Thorns",            chinese_name: "荆棘",         initial_level: 0 },
 ];
 
 /// 特质 · 融合版（新增 & 重设计）
 /// 《旧恢复燃的战旗 · 融合版》中新增的特质
-/// 包含全新特质(11个) + 旧版DLC升级版本(3个) + 融合版专属(2个) = 16个
+/// 包含全新特质(11个) + 旧版DLC升级版本(3个) + 融合版专属(7个) = 21个
 pub const TRAIT_DICTIONARY_FUSION_NEW: &[UpgradeEntry] = &[
     // 全新特质 (11个)
     UpgradeEntry { code: "Hero_Trait_AxeThrower",        chinese_name: "投斧大队",     initial_level: 0 },
@@ -97,15 +107,34 @@ pub const TRAIT_DICTIONARY_FUSION_NEW: &[UpgradeEntry] = &[
     UpgradeEntry { code: "Hero_Trait_Thorns",            chinese_name: "荆棘",         initial_level: 0 },
     UpgradeEntry { code: "Hero_Trait_CheaperClass",      chinese_name: "快速精英",     initial_level: 0 },
     UpgradeEntry { code: "Hero_Trait_Regenerative",      chinese_name: "医疗训练",     initial_level: 0 },
-    // 融合版专属新特质 (2个)
+    // 融合版专属新特质 (5个)
     UpgradeEntry { code: "Hero_Trait_Jumper",            chinese_name: "跳劈大队",     initial_level: 0 },
     UpgradeEntry { code: "Hero_Trait_Creeper",           chinese_name: "短人部队",     initial_level: 0 },
     UpgradeEntry { code: "Hero_Trait_Flyer",             chinese_name: "神鹰",         initial_level: 0 },
     UpgradeEntry { code: "Hero_Trait_Titan",             chinese_name: "泰坦",         initial_level: 0 },
+    UpgradeEntry { code: "Hero_Trait_Slash",             chinese_name: "横扫之刃",     initial_level: 0 },
+    UpgradeEntry { code: "Hero_Trait_Yuri",              chinese_name: "心灵精英",     initial_level: 0 },
+    UpgradeEntry { code: "Hero_Trait_UltimateSquad",     chinese_name: "终极部队",     initial_level: 0 },
+];
+
+/// 特质 · 魔改版（专属集合）
+/// 魔改版专属的特质集合（11个）
+pub const TRAIT_DICTIONARY_MOD_VERSION: &[UpgradeEntry] = &[
+    UpgradeEntry { code: "Hero_Trait_AxeThrower",        chinese_name: "投斧大队",     initial_level: 0 },
+    UpgradeEntry { code: "Hero_Trait_Thorn",             chinese_name: "荆棘",         initial_level: 0 },
+    UpgradeEntry { code: "Hero_Trait_Regenerative",      chinese_name: "医疗训练",     initial_level: 0 },
+    UpgradeEntry { code: "Hero_Trait_CheaperClass",      chinese_name: "快速精通",     initial_level: 0 },
+    UpgradeEntry { code: "Hero_Trait_Jumper",            chinese_name: "跳劈大队",     initial_level: 0 },
+    UpgradeEntry { code: "Hero_Trait_Creeper",           chinese_name: "短人部队",     initial_level: 0 },
+    UpgradeEntry { code: "Hero_Trait_Flyer",             chinese_name: "神鹰",         initial_level: 0 },
+    UpgradeEntry { code: "Hero_Trait_Titan",             chinese_name: "泰坦",         initial_level: 0 },
+    UpgradeEntry { code: "Hero_Trait_Slash",             chinese_name: "横扫之刃",     initial_level: 0 },
+    UpgradeEntry { code: "Hero_Trait_Yuri",              chinese_name: "心灵精英",     initial_level: 0 },
+    UpgradeEntry { code: "Hero_Trait_UltimateSquad",     chinese_name: "终极部队",     initial_level: 0 },
 ];
 
 // 向后兼容别名
-// 注：TRAIT_DICTIONARY_FUSION 包含原版特质(13) + 融合版新增(16) = 占用总体位置
+// 注：TRAIT_DICTIONARY_FUSION 包含原版特质(13) + 融合版新增(21) = 占用总体位置
 pub const TRAIT_DICTIONARY: &[UpgradeEntry] = TRAIT_DICTIONARY_ORIGINAL;
 pub const TRAIT_DICTIONARY_OLDGREY_FLAG: &[UpgradeEntry] = TRAIT_DICTIONARY_OLDGREY_FLAG_LEGACY;
 pub const TRAIT_DICTIONARY_FUSION: &[UpgradeEntry] = TRAIT_DICTIONARY_FUSION_NEW;
