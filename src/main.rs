@@ -156,6 +156,26 @@ pub struct ModifierApp {
 }
 
 // ============ Utility Functions ============
+// Auto-detect editor in the same folder
+fn find_editor_in_same_folder() -> Option<PathBuf> {
+    if let Ok(current_exe) = std::env::current_exe() {
+        if let Some(current_dir) = current_exe.parent() {
+            let candidates = vec![
+                current_dir.join("BadNorthSaveConverter.exe"),
+                current_dir.join("BadNorthSaveEditorRust.exe"),
+            ];
+            
+            for candidate in candidates {
+                if candidate.is_file() {
+                    info!("Found editor at: {}", candidate.display());
+                    return Some(candidate);
+                }
+            }
+        }
+    }
+    None
+}
+
 // Font & Emoji Configuration
 fn configure_chinese_fonts(ctx: &egui::Context) {
     let mut fonts = egui::FontDefinitions::default();
@@ -730,7 +750,16 @@ fn main() -> Result<(), eframe::Error> {
 // ============ Implementations ============
 impl Default for ModifierApp {
     fn default() -> Self {
-        let app_settings = AppSettings::load();
+        let mut app_settings = AppSettings::load();
+
+        // Try to auto-detect editor in the same folder if not already configured
+        if !app_settings.is_editor_exe_valid() {
+            if let Some(editor_path) = find_editor_in_same_folder() {
+                app_settings.editor_exe_path = Some(editor_path.clone());
+                let _ = app_settings.save();
+                info!("Auto-detected editor and saved to settings");
+            }
+        }
 
         let (state, editor_exe) = if app_settings.is_editor_exe_valid() {
             let path = app_settings.editor_exe_path.clone().unwrap();
