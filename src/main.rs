@@ -1873,13 +1873,14 @@ impl ModifierApp {
                                     ui.add_space(8.0);
 
                                     // ===== 魔改版- 专属装备 =====
-                                    let mod_base = "魔改版- 专属装备";
+                                    ui.label(egui::RichText::new(t("mod_items_title", &lang)).strong());
                                     let mod_label = if edit_state.mod_items_expanded {
-                                        format!("{} ▼", mod_base)
+                                        t("collapse_label", &lang)
                                     } else {
-                                        format!("{} ▶", mod_base)
+                                        t("expand_label", &lang)
                                     };
-                                    if ui.button(egui::RichText::new(mod_label).strong()).clicked() {
+                                    let is_mod_active = edit_state.mod_items_expanded;
+                                    if ui.selectable_label(is_mod_active, mod_label).clicked() {
                                         edit_state.mod_items_expanded = !edit_state.mod_items_expanded;
                                     }
                                     
@@ -1960,13 +1961,14 @@ impl ModifierApp {
                                     ui.add_space(8.0);
 
                                     // ===== 融合版- 专属装备 =====
-                                    let fusion_base = "融合版- 专属装备";
+                                    ui.label(egui::RichText::new(t("fusion_items_title", &lang)).strong());
                                     let fusion_label = if edit_state.fusion_items_expanded {
-                                        format!("{} ▼", fusion_base)
+                                        t("collapse_label", &lang)
                                     } else {
-                                        format!("{} ▶", fusion_base)
+                                        t("expand_label", &lang)
                                     };
-                                    if ui.button(egui::RichText::new(fusion_label).strong()).clicked() {
+                                    let is_fusion_active = edit_state.fusion_items_expanded;
+                                    if ui.selectable_label(is_fusion_active, fusion_label).clicked() {
                                         edit_state.fusion_items_expanded = !edit_state.fusion_items_expanded;
                                     }
                                     
