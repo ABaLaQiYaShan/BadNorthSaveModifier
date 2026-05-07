@@ -386,6 +386,15 @@ fn t(key: &str, lang: &Language) -> &'static str {
             "trait_editor_title"  => "特质修改 (Trait)",
             "log_heading"         => "操作日志",
             "apply_hint"          => "输入后点击【应用】",
+            
+            "editor_exe_support"      => "支持 BadNorthSaveConverter.exe 和 BadNorthSaveEditorRust.exe",
+            "quick_apply"             => "快速应用",
+            "collapse_label"          => "▼ 收起",
+            "expand_label"            => "▶ 展开",
+            "quick_apply_hint"        => "快速应用",
+            "fusion_items_title"      => "融合版- 专属装备",
+            "fusion_traits_title"     => "融合版- 专属特质",
+            "oldgrey_flag_traits_title" => "旧灰复燃的战旗- 专属特质",
             _              => "",
         },
         Language::English => match key {
@@ -497,6 +506,15 @@ fn t(key: &str, lang: &Language) -> &'static str {
             "trait_editor_title"  => "Trait",
             "log_heading"         => "Logs",
             "apply_hint"          => "Type then click Apply",
+            
+            "editor_exe_support"      => "Supports BadNorthSaveConverter.exe and BadNorthSaveEditorRust.exe",
+            "quick_apply"             => "Quick Apply",
+            "collapse_label"          => "▼ Collapse",
+            "expand_label"            => "▶ Expand",
+            "quick_apply_hint"        => "Quick Apply",
+            "fusion_items_title"      => "Fusion - Exclusive Equipment",
+            "fusion_traits_title"     => "Fusion - Exclusive Traits",
+            "oldgrey_flag_traits_title" => "Rebirth Flag - Exclusive Traits",
             _              => "",
         },
     }
@@ -998,7 +1016,7 @@ impl ModifierApp {
 
                                     let commander_base = t("menu_commanders", &lang);
                                     let commander_label = if edit_state.commander_expanded {
-                                        format!("{} ▶", commander_base)
+                                        format!("{} ▼", commander_base)
                                     } else {
                                         format!("{} ▶", commander_base)
                                     };
@@ -1037,7 +1055,7 @@ impl ModifierApp {
 
                                     let currency_base = t("menu_currency", &lang);
                                     let currency_label = if edit_state.currency_expanded {
-                                        format!("{} ▶", currency_base)
+                                        format!("{} ▼", currency_base)
                                     } else {
                                         format!("{} ▶", currency_base)
                                     };
@@ -1167,7 +1185,7 @@ impl ModifierApp {
                                         });
 
                                         ui.add_space(4.0);
-                                        ui.label(egui::RichText::new("支持 BadNorthSaveConverter.exe 和 BadNorthSaveEditorRust.exe").small().color(egui::Color32::GRAY));
+                                        ui.label(egui::RichText::new(t("editor_exe_support", &lang)).small().color(egui::Color32::GRAY));
 
                                         ui.add_space(4.0);
                                         ui.horizontal(|ui| {
@@ -2073,17 +2091,15 @@ impl ModifierApp {
                 });
 
                 ui.separator();
-                ui.label(egui::RichText::new("快速应用").small().strong());
-
                 ui.horizontal(|ui| {
-                    ui.small(egui::RichText::new("快速应用").small().strong());
+                    ui.small(egui::RichText::new(t("quick_apply", language)).small().strong());
                     ui.small(egui::RichText::new("复制").small().strong());
                 });
 
                 for entry in class_dictionary::CLASS_DICTIONARY.iter() {
                     ui.horizontal(|ui| {
                         if ui.add(egui::Button::new("⚡").small())
-                            .on_hover_text("直接应用")
+                            .on_hover_text(t("quick_apply_hint", language))
                             .clicked() {
                             match SaveManager::modify_hero_upgrade(
                                 json_data,
@@ -2210,10 +2226,8 @@ impl ModifierApp {
             }
 
             ui.separator();
-            ui.label(egui::RichText::new("快速应用").small().strong());
-
             ui.horizontal(|ui| {
-                ui.small(egui::RichText::new("快速应用").small().strong());
+                ui.small(egui::RichText::new(t("quick_apply", language)).small().strong());
                 ui.small(egui::RichText::new("复制").small().strong());
             });
 
@@ -2221,7 +2235,7 @@ impl ModifierApp {
                 let is_consumable = entry.code == CORNUCOPIA_UPGRADE_CODE;
                 ui.horizontal(|ui| {
                     if ui.add_enabled(!is_consumable, egui::Button::new("⚡").small())
-                        .on_hover_text("直接应用")
+                        .on_hover_text(t("quick_apply_hint", language))
                         .clicked() {
                         let old_name = details.item_info.as_ref().map_or("", |i| i.name.as_str()).to_string();
                         let old_level = details.item_info.as_ref().map_or(0, |i| i.level);
@@ -2266,11 +2280,11 @@ impl ModifierApp {
             }
 
             ui.separator();
-            ui.label(egui::RichText::new("融合物- 专属装备").strong());
+            ui.label(egui::RichText::new(t("fusion_items_title", language)).strong());
             let fusion_label = if edit_state.fusion_items_expanded {
-                "▼ 收起"
+                t("collapse_label", language)
             } else {
-                "▶ 展开"
+                t("expand_label", language)
             };
             let is_fusion_active = edit_state.fusion_items_expanded;
             if ui.selectable_label(is_fusion_active, fusion_label).clicked() {
@@ -2280,14 +2294,14 @@ impl ModifierApp {
             if edit_state.fusion_items_expanded {
 
                 ui.horizontal(|ui| {
-                    ui.small(egui::RichText::new("快速应用").small().strong());
+                    ui.small(egui::RichText::new(t("quick_apply", language)).small().strong());
                     ui.small(egui::RichText::new("复制").small().strong());
                 });
 
                 for entry in upgrade_dictionary::ITEM_DICTIONARY_FUSION.iter() {
                     ui.horizontal(|ui| {
                         if ui.add(egui::Button::new("⚡").small())
-                            .on_hover_text("直接应用")
+                            .on_hover_text(t("quick_apply_hint", language))
                             .clicked() {
                             let old_name = details.item_info.as_ref().map_or("", |i| i.name.as_str()).to_string();
                             let old_level = details.item_info.as_ref().map_or(0, |i| i.level);
@@ -2415,17 +2429,15 @@ impl ModifierApp {
             }
 
             ui.separator();
-            ui.label(egui::RichText::new("快速应用").small().strong());
-
             ui.horizontal(|ui| {
-                ui.small(egui::RichText::new("快速应用").small().strong());
+                ui.small(egui::RichText::new(t("quick_apply", language)).small().strong());
                 ui.small(egui::RichText::new("复制").small().strong());
             });
 
             for entry in upgrade_dictionary::TRAIT_DICTIONARY.iter() {
                 ui.horizontal(|ui| {
                     if ui.add(egui::Button::new("⚡").small())
-                        .on_hover_text("直接应用")
+                        .on_hover_text(t("quick_apply_hint", language))
                         .clicked() {
                         let old_name = details.trait_info.as_ref().map_or("", |t| t.name.as_str()).to_string();
                         let old_level = details.trait_info.as_ref().map_or(0, |t| t.level);
@@ -2467,11 +2479,11 @@ impl ModifierApp {
             }
 
             ui.separator();
-            ui.label(egui::RichText::new("旧灰复燃的战旗- 专属特质").strong());
+            ui.label(egui::RichText::new(t("oldgrey_flag_traits_title", language)).strong());
             let flag_label = if edit_state.oldgrey_flag_traits_expanded {
-                "▼ 收起"
+                t("collapse_label", language)
             } else {
-                "▶ 展开"
+                t("expand_label", language)
             };
             let is_flag_active = edit_state.oldgrey_flag_traits_expanded;
             if ui.selectable_label(is_flag_active, flag_label).clicked() {
@@ -2481,14 +2493,14 @@ impl ModifierApp {
             if edit_state.oldgrey_flag_traits_expanded {
 
                 ui.horizontal(|ui| {
-                    ui.small(egui::RichText::new("").small());
+                    ui.small(egui::RichText::new(t("quick_apply", language)).small().strong());
                     ui.small(egui::RichText::new("复制").small().strong());
                 });
 
                 for entry in upgrade_dictionary::TRAIT_DICTIONARY_OLDGREY_FLAG.iter() {
                     ui.horizontal(|ui| {
                         if ui.add(egui::Button::new("⚡").small())
-                            .on_hover_text("直接应用")
+                            .on_hover_text(t("quick_apply_hint", language))
                             .clicked() {
                             let old_name = details.trait_info.as_ref().map_or("", |t| t.name.as_str()).to_string();
                             let old_level = details.trait_info.as_ref().map_or(0, |t| t.level);
@@ -2531,11 +2543,11 @@ impl ModifierApp {
             }
 
             ui.separator();
-            ui.label(egui::RichText::new("融合物- 专属特质").strong());
+            ui.label(egui::RichText::new(t("fusion_traits_title", language)).strong());
             let fusion_label = if edit_state.fusion_traits_expanded {
-                "▼ 收起"
+                t("collapse_label", language)
             } else {
-                "▶ 展开"
+                t("expand_label", language)
             };
             let is_fusion_active = edit_state.fusion_traits_expanded;
             if ui.selectable_label(is_fusion_active, fusion_label).clicked() {
@@ -2545,14 +2557,14 @@ impl ModifierApp {
             if edit_state.fusion_traits_expanded {
 
                 ui.horizontal(|ui| {
-                    ui.small(egui::RichText::new("").small());
+                    ui.small(egui::RichText::new(t("quick_apply", language)).small().strong());
                     ui.small(egui::RichText::new("复制").small().strong());
                 });
 
                 for entry in upgrade_dictionary::TRAIT_DICTIONARY_FUSION.iter() {
                     ui.horizontal(|ui| {
                         if ui.add(egui::Button::new("⚡").small())
-                            .on_hover_text("直接应用")
+                            .on_hover_text(t("quick_apply_hint", language))
                             .clicked() {
                             let old_name = details.trait_info.as_ref().map_or("", |t| t.name.as_str()).to_string();
                             let old_level = details.trait_info.as_ref().map_or(0, |t| t.level);
