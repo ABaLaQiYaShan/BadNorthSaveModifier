@@ -4,6 +4,7 @@ use std::fs;
 use std::path::Path;
 use std::process::Command;
 use serde_json::Value;
+use paste::paste;
 
 pub const GRAIL_UPGRADE_CODE: &str = "Hero_Upgrade_Grail";
 
@@ -14,6 +15,68 @@ pub const SIZE_UPGRADE_CODE: &str = "Hero_Upgrade_Size";
 pub const WARHAMMER_UPGRADE_CODE: &str = "Hero_Upgrade_Warhammer";
 pub const CORNUCOPIA_UPGRADE_CODE: &str = "Hero_Upgrade_Cornucopia";
 pub const WAR_HORN_UPGRADE_CODE: &str = "Hero_Upgrade_WarHorn";
+
+// ============ 快捷方法宏 (生成类似物品的 get/set/increment/decrement 方法) ============
+macro_rules! item_count_shortcuts {
+    ($name:ident, $code:expr) => {
+        paste! {
+            pub fn [<get_inventory_ $name _count>](json_value: &Value) -> i32 {
+                Self::get_inventory_item_count(json_value, $code)
+            }
+            pub fn [<get_hero_ $name _count>](json_value: &Value) -> i32 {
+                Self::get_hero_item_count(json_value, $code)
+            }
+            pub fn [<get_total_ $name _count>](json_value: &Value) -> i32 {
+                Self::get_total_item_count(json_value, $code)
+            }
+            pub fn [<set_ $name _count>](json_value: &mut Value, target: i32) -> Result<()> {
+                Self::set_item_count(json_value, $code, target)
+            }
+            pub fn [<increment_ $name _count>](json_value: &mut Value) -> Result<i32> {
+                let current_total = Self::get_total_inventory_count(json_value);
+                if current_total >= 20 {
+                    return Err(anyhow!("❌背包已满（{}/20），无法继续添加装备", current_total));
+                }
+                Self::increment_item_count(json_value, $code)
+            }
+            pub fn [<decrement_ $name _count>](json_value: &mut Value) -> Result<i32> {
+                Self::decrement_item_count(json_value, $code)
+            }
+        }
+    };
+    (@dead_code $name:ident, $code:expr) => {
+        paste! {
+            #[allow(dead_code)]
+            pub fn [<get_inventory_ $name _count>](json_value: &Value) -> i32 {
+                Self::get_inventory_item_count(json_value, $code)
+            }
+            #[allow(dead_code)]
+            pub fn [<get_hero_ $name _count>](json_value: &Value) -> i32 {
+                Self::get_hero_item_count(json_value, $code)
+            }
+            #[allow(dead_code)]
+            pub fn [<get_total_ $name _count>](json_value: &Value) -> i32 {
+                Self::get_total_item_count(json_value, $code)
+            }
+            #[allow(dead_code)]
+            pub fn [<set_ $name _count>](json_value: &mut Value, target: i32) -> Result<()> {
+                Self::set_item_count(json_value, $code, target)
+            }
+            #[allow(dead_code)]
+            pub fn [<increment_ $name _count>](json_value: &mut Value) -> Result<i32> {
+                let current_total = Self::get_total_inventory_count(json_value);
+                if current_total >= 20 {
+                    return Err(anyhow!("❌背包已满（{}/20），无法继续添加装备", current_total));
+                }
+                Self::increment_item_count(json_value, $code)
+            }
+            #[allow(dead_code)]
+            pub fn [<decrement_ $name _count>](json_value: &mut Value) -> Result<i32> {
+                Self::decrement_item_count(json_value, $code)
+            }
+        }
+    };
+}
 
 pub struct SaveManager;
 
@@ -1791,99 +1854,14 @@ impl SaveManager {
         Ok(())
     }
 
-    pub fn get_inventory_bomb_count(json_value: &Value) -> i32 { Self::get_inventory_item_count(json_value, BOMB_UPGRADE_CODE) }
-    pub fn get_hero_bomb_count(json_value: &Value) -> i32 { Self::get_hero_item_count(json_value, BOMB_UPGRADE_CODE) }
-    pub fn get_total_bomb_count(json_value: &Value) -> i32 { Self::get_total_item_count(json_value, BOMB_UPGRADE_CODE) }
-    pub fn set_bomb_count(json_value: &mut Value, target: i32) -> Result<()> { Self::set_item_count(json_value, BOMB_UPGRADE_CODE, target) }
-    pub fn increment_bomb_count(json_value: &mut Value) -> Result<i32> {
-        let current_total = Self::get_total_inventory_count(json_value);
-        if current_total >= 20 {
-            return Err(anyhow!("❌背包已满（{}/20），无法继续添加装备", current_total));
-        }
-        Self::increment_item_count(json_value, BOMB_UPGRADE_CODE)
-    }
-    pub fn decrement_bomb_count(json_value: &mut Value) -> Result<i32> { Self::decrement_item_count(json_value, BOMB_UPGRADE_CODE) }
-
-    pub fn get_inventory_mine_count(json_value: &Value) -> i32 { Self::get_inventory_item_count(json_value, MINE_UPGRADE_CODE) }
-    pub fn get_hero_mine_count(json_value: &Value) -> i32 { Self::get_hero_item_count(json_value, MINE_UPGRADE_CODE) }
-    pub fn get_total_mine_count(json_value: &Value) -> i32 { Self::get_total_item_count(json_value, MINE_UPGRADE_CODE) }
-    pub fn set_mine_count(json_value: &mut Value, target: i32) -> Result<()> { Self::set_item_count(json_value, MINE_UPGRADE_CODE, target) }
-    pub fn increment_mine_count(json_value: &mut Value) -> Result<i32> {
-        let current_total = Self::get_total_inventory_count(json_value);
-        if current_total >= 20 {
-            return Err(anyhow!("❌背包已满（{}/20），无法继续添加装备", current_total));
-        }
-        Self::increment_item_count(json_value, MINE_UPGRADE_CODE)
-    }
-    pub fn decrement_mine_count(json_value: &mut Value) -> Result<i32> { Self::decrement_item_count(json_value, MINE_UPGRADE_CODE) }
-
-    pub fn get_inventory_philosophers_stone_count(json_value: &Value) -> i32 { Self::get_inventory_item_count(json_value, PHILOSOPHERS_STONE_UPGRADE_CODE) }
-    pub fn get_hero_philosophers_stone_count(json_value: &Value) -> i32 { Self::get_hero_item_count(json_value, PHILOSOPHERS_STONE_UPGRADE_CODE) }
-    pub fn get_total_philosophers_stone_count(json_value: &Value) -> i32 { Self::get_total_item_count(json_value, PHILOSOPHERS_STONE_UPGRADE_CODE) }
-    pub fn set_philosophers_stone_count(json_value: &mut Value, target: i32) -> Result<()> { Self::set_item_count(json_value, PHILOSOPHERS_STONE_UPGRADE_CODE, target) }
-    pub fn increment_philosophers_stone_count(json_value: &mut Value) -> Result<i32> {
-        let current_total = Self::get_total_inventory_count(json_value);
-        if current_total >= 20 {
-            return Err(anyhow!("❌背包已满（{}/20），无法继续添加装备", current_total));
-        }
-        Self::increment_item_count(json_value, PHILOSOPHERS_STONE_UPGRADE_CODE)
-    }
-    pub fn decrement_philosophers_stone_count(json_value: &mut Value) -> Result<i32> { Self::decrement_item_count(json_value, PHILOSOPHERS_STONE_UPGRADE_CODE) }
-
-    pub fn get_inventory_size_count(json_value: &Value) -> i32 { Self::get_inventory_item_count(json_value, SIZE_UPGRADE_CODE) }
-    pub fn get_hero_size_count(json_value: &Value) -> i32 { Self::get_hero_item_count(json_value, SIZE_UPGRADE_CODE) }
-    pub fn get_total_size_count(json_value: &Value) -> i32 { Self::get_total_item_count(json_value, SIZE_UPGRADE_CODE) }
-    pub fn set_size_count(json_value: &mut Value, target: i32) -> Result<()> { Self::set_item_count(json_value, SIZE_UPGRADE_CODE, target) }
-    pub fn increment_size_count(json_value: &mut Value) -> Result<i32> {
-        let current_total = Self::get_total_inventory_count(json_value);
-        if current_total >= 20 {
-            return Err(anyhow!("❌背包已满（{}/20），无法继续添加装备", current_total));
-        }
-        Self::increment_item_count(json_value, SIZE_UPGRADE_CODE)
-    }
-    pub fn decrement_size_count(json_value: &mut Value) -> Result<i32> { Self::decrement_item_count(json_value, SIZE_UPGRADE_CODE) }
-
-    pub fn get_inventory_warhammer_count(json_value: &Value) -> i32 { Self::get_inventory_item_count(json_value, WARHAMMER_UPGRADE_CODE) }
-    pub fn get_hero_warhammer_count(json_value: &Value) -> i32 { Self::get_hero_item_count(json_value, WARHAMMER_UPGRADE_CODE) }
-    pub fn get_total_warhammer_count(json_value: &Value) -> i32 { Self::get_total_item_count(json_value, WARHAMMER_UPGRADE_CODE) }
-    pub fn set_warhammer_count(json_value: &mut Value, target: i32) -> Result<()> { Self::set_item_count(json_value, WARHAMMER_UPGRADE_CODE, target) }
-    pub fn increment_warhammer_count(json_value: &mut Value) -> Result<i32> {
-        let current_total = Self::get_total_inventory_count(json_value);
-        if current_total >= 20 {
-            return Err(anyhow!("❌背包已满（{}/20），无法继续添加装备", current_total));
-        }
-        Self::increment_item_count(json_value, WARHAMMER_UPGRADE_CODE)
-    }
-    pub fn decrement_warhammer_count(json_value: &mut Value) -> Result<i32> { Self::decrement_item_count(json_value, WARHAMMER_UPGRADE_CODE) }
-
-    pub fn get_inventory_cornucopia_count(json_value: &Value) -> i32 { Self::get_inventory_item_count(json_value, CORNUCOPIA_UPGRADE_CODE) }
-    pub fn get_hero_cornucopia_count(json_value: &Value) -> i32 { Self::get_hero_item_count(json_value, CORNUCOPIA_UPGRADE_CODE) }
-    pub fn get_total_cornucopia_count(json_value: &Value) -> i32 { Self::get_total_item_count(json_value, CORNUCOPIA_UPGRADE_CODE) }
-    pub fn set_cornucopia_count(json_value: &mut Value, target: i32) -> Result<()> { Self::set_item_count(json_value, CORNUCOPIA_UPGRADE_CODE, target) }
-    pub fn increment_cornucopia_count(json_value: &mut Value) -> Result<i32> {
-        let current_total = Self::get_total_inventory_count(json_value);
-        if current_total >= 20 {
-            return Err(anyhow!("❌背包已满（{}/20），无法继续添加装备", current_total));
-        }
-        Self::increment_item_count(json_value, CORNUCOPIA_UPGRADE_CODE)
-    }
-    pub fn decrement_cornucopia_count(json_value: &mut Value) -> Result<i32> { Self::decrement_item_count(json_value, CORNUCOPIA_UPGRADE_CODE) }
-
-    pub fn get_inventory_war_horn_count(json_value: &Value) -> i32 { Self::get_inventory_item_count(json_value, WAR_HORN_UPGRADE_CODE) }
-    pub fn get_hero_war_horn_count(json_value: &Value) -> i32 { Self::get_hero_item_count(json_value, WAR_HORN_UPGRADE_CODE) }
-    pub fn get_total_war_horn_count(json_value: &Value) -> i32 { Self::get_total_item_count(json_value, WAR_HORN_UPGRADE_CODE) }
-    #[allow(dead_code)]
-    pub fn set_war_horn_count(json_value: &mut Value, target: i32) -> Result<()> { Self::set_item_count(json_value, WAR_HORN_UPGRADE_CODE, target) }
-    #[allow(dead_code)]
-    pub fn increment_war_horn_count(json_value: &mut Value) -> Result<i32> {
-        let current_total = Self::get_total_inventory_count(json_value);
-        if current_total >= 20 {
-            return Err(anyhow!("❌背包已满（{}/20），无法继续添加装备", current_total));
-        }
-        Self::increment_item_count(json_value, WAR_HORN_UPGRADE_CODE)
-    }
-    #[allow(dead_code)]
-    pub fn decrement_war_horn_count(json_value: &mut Value) -> Result<i32> { Self::decrement_item_count(json_value, WAR_HORN_UPGRADE_CODE) }
+    // 用宏生成所有快捷方法 (~150 行代码简化为以下7行)
+    item_count_shortcuts!(bomb, BOMB_UPGRADE_CODE);
+    item_count_shortcuts!(mine, MINE_UPGRADE_CODE);
+    item_count_shortcuts!(philosophers_stone, PHILOSOPHERS_STONE_UPGRADE_CODE);
+    item_count_shortcuts!(size, SIZE_UPGRADE_CODE);
+    item_count_shortcuts!(warhammer, WARHAMMER_UPGRADE_CODE);
+    item_count_shortcuts!(cornucopia, CORNUCOPIA_UPGRADE_CODE);
+    item_count_shortcuts!(@dead_code war_horn, WAR_HORN_UPGRADE_CODE);
 
     pub fn get_all_inventory_items(json_value: &Value) -> Vec<(String, i32)> {
         let (list_id_opt, array_id) = match Self::find_inventory_refs(json_value) {
