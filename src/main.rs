@@ -1198,6 +1198,7 @@ impl ModifierApp {
                                         hero,
                                         edit_state,
                                         recruited_heroes,
+                                        hero_details,
                                         &lang,
                                     );
                                 } else {
