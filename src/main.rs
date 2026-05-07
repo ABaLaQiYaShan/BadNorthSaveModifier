@@ -1930,6 +1930,7 @@ impl ModifierApp {
         details: HeroDetails,
         edit_state: &mut EditState,
         recruited_heroes: &mut Vec<HeroDetails>,
+        hero_details: &mut Option<HeroDetails>,
         language: &Language,
     ) {
         egui::ScrollArea::vertical()
@@ -1949,6 +1950,7 @@ impl ModifierApp {
                                 details.clone(),
                                 edit_state,
                                 recruited_heroes,
+                                hero_details,
                                 language,
                             );
                         });
@@ -1966,6 +1968,8 @@ impl ModifierApp {
                                 hero_key,
                                 details.clone(),
                                 edit_state,
+                                recruited_heroes,
+                                hero_details,
                                 language,
                             );
                         });
@@ -1983,6 +1987,8 @@ impl ModifierApp {
                                 hero_key,
                                 details.clone(),
                                 edit_state,
+                                recruited_heroes,
+                                hero_details,
                                 language,
                             );
                         });
@@ -2000,6 +2006,7 @@ impl ModifierApp {
         details: HeroDetails,
         edit_state: &mut EditState,
         recruited_heroes: &mut Vec<HeroDetails>,
+        hero_details: &mut Option<HeroDetails>,
         language: &Language,
     ) {
         ui.group(|ui| {
@@ -2023,35 +2030,37 @@ impl ModifierApp {
                 ui.separator();
 
                 ui.label(t("new_value", language));
-                if ui.text_edit_singleline(&mut edit_state.new_class_text).changed() {
-                    ui.label(egui::RichText::new(t("apply_hint", language)).small().weak());
-                }
-
-                if ui.button(t("apply_change", language)).clicked() {
-                    let new_code = edit_state.new_class_text.trim().to_string();
-                    if !new_code.is_empty() {
-                        match SaveManager::modify_hero_upgrade(
-                            json_data,
-                            hero_key,
-                            "classUpgrade",
-                            &new_code,
-                            class_info.level,
-                        ) {
-                            Ok(_) => {
-                                edit_state.add_log("INFO", &format!("✔兵种已修改 {} →{}", class_info.name, new_code));
-                                edit_state.add_log("INFO", "✔技能已清空");
-                                if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) {
-                                    *recruited_heroes = heroes;
+                ui.horizontal(|ui| {
+                    if ui.button(t("apply_btn", language)).clicked() {
+                        let new_code = edit_state.new_class_text.trim().to_string();
+                        if !new_code.is_empty() {
+                            match SaveManager::modify_hero_upgrade(
+                                json_data,
+                                hero_key,
+                                "classUpgrade",
+                                &new_code,
+                                class_info.level,
+                            ) {
+                                Ok(_) => {
+                                    edit_state.add_log("INFO", &format!("✔兵种已修改 {} →{}", class_info.name, new_code));
+                                    edit_state.add_log("INFO", "✔技能已清空");
+                                    if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) {
+                                        *recruited_heroes = heroes;
+                                        if let Some(updated_hero) = recruited_heroes.iter().find(|h| h.key == hero_key).cloned() {
+                                            *hero_details = Some(updated_hero);
+                                        }
+                                    }
+                                    edit_state.new_class_text.clear();
                                 }
-                                edit_state.new_class_text.clear();
-                            }
-                            Err(e) => {
-                                edit_state.add_log("ERROR", &format!("修改失败: {}", e));
-                                edit_state.add_log("WARN", &format!("ID:{} →{}", class_info.record_id, new_code));
+                                Err(e) => {
+                                    edit_state.add_log("ERROR", &format!("修改失败: {}", e));
+                                    edit_state.add_log("WARN", &format!("ID:{} →{}", class_info.record_id, new_code));
+                                }
                             }
                         }
                     }
-                }
+                    ui.text_edit_singleline(&mut edit_state.new_class_text);
+                });
 
                 ui.separator();
                 ui.label(egui::RichText::new(t("quick_select", language)).small().strong());
@@ -2063,9 +2072,31 @@ impl ModifierApp {
 
                 for entry in class_dictionary::CLASS_DICTIONARY.iter() {
                     ui.horizontal(|ui| {
-                        if ui.add(egui::Button::new("⚠").small()).clicked() {
-                            edit_state.new_class_text = entry.code.to_string();
-                            edit_state.add_log("INFO", &format!("选择: {}", entry.chinese_name));
+                        if ui.add(egui::Button::new("⚠").small())
+                            .on_hover_text("直接应用")
+                            .clicked() {
+                            match SaveManager::modify_hero_upgrade(
+                                json_data,
+                                hero_key,
+                                "classUpgrade",
+                                entry.code,
+                                class_info.level,
+                            ) {
+                                Ok(_) => {
+                                    edit_state.add_log("INFO", &format!("✔兵种已修改 {} →{}", class_info.name, entry.chinese_name));
+                                    edit_state.add_log("INFO", "✔技能已清空");
+                                    if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) {
+                                        *recruited_heroes = heroes;
+                                        if let Some(updated_hero) = recruited_heroes.iter().find(|h| h.key == hero_key).cloned() {
+                                            *hero_details = Some(updated_hero);
+                                        }
+                                    }
+                                }
+                                Err(e) => {
+                                    edit_state.add_log("ERROR", &format!("修改失败: {}", e));
+                                    edit_state.add_log("WARN", &format!("ID:{} →{}", class_info.record_id, entry.code));
+                                }
+                            }
                         }
                         if ui.add(egui::Button::new("📋").small())
                             .on_hover_text("复制代码到剪贴板")
@@ -2088,6 +2119,8 @@ impl ModifierApp {
         hero_key: &str,
         details: HeroDetails,
         edit_state: &mut EditState,
+        recruited_heroes: &mut Vec<HeroDetails>,
+        hero_details: &mut Option<HeroDetails>,
         language: &Language,
     ) {
         ui.group(|ui| {
@@ -2114,36 +2147,43 @@ impl ModifierApp {
             ui.separator();
 
             ui.label(t("new_value", language));
-            ui.text_edit_singleline(&mut edit_state.new_item_text);
-
-            if ui.button(t("apply_change", language)).clicked() {
-                let new_code = edit_state.new_item_text.trim().to_string();
-                if !new_code.is_empty() {
-                    let old_name = details.item_info.as_ref().map_or("", |i| i.name.as_str()).to_string();
-                    let old_level = details.item_info.as_ref().map_or(0, |i| i.level);
-                    match SaveManager::modify_hero_upgrade(
-                        json_data,
-                        hero_key,
-                        "itemUpgrade",
-                        &new_code,
-                        old_level,
-                    ) {
-                        Ok(_) => {
-                            edit_state.add_log("INFO", &format!("✔装备已修改 {} →{}", old_name, new_code));
-                            if old_name.contains("Cornucopia") || new_code.contains("Cornucopia") {
-                                edit_state.add_log("INFO", "⚠️ 操作涉及雅贝那：建议重启游戏以刷新效果");
+            ui.horizontal(|ui| {
+                if ui.button(t("apply_btn", language)).clicked() {
+                    let new_code = edit_state.new_item_text.trim().to_string();
+                    if !new_code.is_empty() {
+                        let old_name = details.item_info.as_ref().map_or("", |i| i.name.as_str()).to_string();
+                        let old_level = details.item_info.as_ref().map_or(0, |i| i.level);
+                        match SaveManager::modify_hero_upgrade(
+                            json_data,
+                            hero_key,
+                            "itemUpgrade",
+                            &new_code,
+                            old_level,
+                        ) {
+                            Ok(_) => {
+                                edit_state.add_log("INFO", &format!("✔装备已修改 {} →{}", old_name, new_code));
+                                if old_name.contains("Cornucopia") || new_code.contains("Cornucopia") {
+                                    edit_state.add_log("INFO", "⚠️ 操作涉及雅贝那：建议重启游戏以刷新效果");
+                                }
+                                if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) {
+                                    *recruited_heroes = heroes;
+                                    if let Some(updated_hero) = recruited_heroes.iter().find(|h| h.key == hero_key).cloned() {
+                                        *hero_details = Some(updated_hero);
+                                    }
+                                }
+                                edit_state.new_item_text.clear();
                             }
-                            edit_state.new_item_text.clear();
-                        }
-                        Err(e) => {
-                            edit_state.add_log("ERROR", &format!("修改失败: {}", e));
-                            if let Some(ref item_info) = details.item_info {
-                                edit_state.add_log("WARN", &format!("ID:{} →{}", item_info.record_id, new_code));
+                            Err(e) => {
+                                edit_state.add_log("ERROR", &format!("修改失败: {}", e));
+                                if let Some(ref item_info) = details.item_info {
+                                    edit_state.add_log("WARN", &format!("ID:{} →{}", item_info.record_id, new_code));
+                                }
                             }
                         }
                     }
                 }
-            }
+                ui.text_edit_singleline(&mut edit_state.new_item_text);
+            });
 
             if details.item_info.is_some() {
                 if ui.button(egui::RichText::new(t("remove_item", language)).color(egui::Color32::LIGHT_RED)).clicked() {
@@ -2171,10 +2211,36 @@ impl ModifierApp {
                 let is_consumable = entry.code == CORNUCOPIA_UPGRADE_CODE;
                 ui.horizontal(|ui| {
                     if ui.add_enabled(!is_consumable, egui::Button::new("⚠").small())
-                        .on_hover_text("复制到输入框")
+                        .on_hover_text("直接应用")
                         .clicked() {
-                        edit_state.new_item_text = entry.code.to_string();
-                        edit_state.add_log("INFO", &format!("选择: {}", entry.chinese_name));
+                        let old_name = details.item_info.as_ref().map_or("", |i| i.name.as_str()).to_string();
+                        let old_level = details.item_info.as_ref().map_or(0, |i| i.level);
+                        match SaveManager::modify_hero_upgrade(
+                            json_data,
+                            hero_key,
+                            "itemUpgrade",
+                            entry.code,
+                            old_level,
+                        ) {
+                            Ok(_) => {
+                                edit_state.add_log("INFO", &format!("✔装备已修改 {} →{}", old_name, entry.chinese_name));
+                                if old_name.contains("Cornucopia") || entry.code.contains("Cornucopia") {
+                                    edit_state.add_log("INFO", "⚠️ 操作涉及雅贝那：建议重启游戏以刷新效果");
+                                }
+                                if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) {
+                                    *recruited_heroes = heroes;
+                                    if let Some(updated_hero) = recruited_heroes.iter().find(|h| h.key == hero_key).cloned() {
+                                        *hero_details = Some(updated_hero);
+                                    }
+                                }
+                            }
+                            Err(e) => {
+                                edit_state.add_log("ERROR", &format!("修改失败: {}", e));
+                                if let Some(ref item_info) = details.item_info {
+                                    edit_state.add_log("WARN", &format!("ID:{} →{}", item_info.record_id, entry.code));
+                                }
+                            }
+                        }
                     }
                     if ui.add(egui::Button::new("📋").small())
                         .on_hover_text("复制代码到剪贴板")
@@ -2210,10 +2276,36 @@ impl ModifierApp {
                 for entry in upgrade_dictionary::ITEM_DICTIONARY_FUSION.iter() {
                     ui.horizontal(|ui| {
                         if ui.add(egui::Button::new("⚠").small())
-                            .on_hover_text("复制到输入框")
+                            .on_hover_text("直接应用")
                             .clicked() {
-                            edit_state.new_item_text = entry.code.to_string();
-                            edit_state.add_log("INFO", &format!("选择: {}", entry.chinese_name));
+                            let old_name = details.item_info.as_ref().map_or("", |i| i.name.as_str()).to_string();
+                            let old_level = details.item_info.as_ref().map_or(0, |i| i.level);
+                            match SaveManager::modify_hero_upgrade(
+                                json_data,
+                                hero_key,
+                                "itemUpgrade",
+                                entry.code,
+                                old_level,
+                            ) {
+                                Ok(_) => {
+                                    edit_state.add_log("INFO", &format!("✔装备已修改 {} →{}", old_name, entry.chinese_name));
+                                    if old_name.contains("Cornucopia") || entry.code.contains("Cornucopia") {
+                                        edit_state.add_log("INFO", "⚠️ 操作涉及雅贝那：建议重启游戏以刷新效果");
+                                    }
+                                    if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) {
+                                        *recruited_heroes = heroes;
+                                        if let Some(updated_hero) = recruited_heroes.iter().find(|h| h.key == hero_key).cloned() {
+                                            *hero_details = Some(updated_hero);
+                                        }
+                                    }
+                                }
+                                Err(e) => {
+                                    edit_state.add_log("ERROR", &format!("修改失败: {}", e));
+                                    if let Some(ref item_info) = details.item_info {
+                                        edit_state.add_log("WARN", &format!("ID:{} →{}", item_info.record_id, entry.code));
+                                    }
+                                }
+                            }
                         }
                         if ui.add(egui::Button::new("📋").small())
                             .on_hover_text("复制代码到剪贴板")
@@ -2235,6 +2327,8 @@ impl ModifierApp {
         hero_key: &str,
         details: HeroDetails,
         edit_state: &mut EditState,
+        recruited_heroes: &mut Vec<HeroDetails>,
+        hero_details: &mut Option<HeroDetails>,
         language: &Language,
     ) {
         ui.group(|ui| {
@@ -2257,36 +2351,43 @@ impl ModifierApp {
             ui.separator();
 
             ui.label(t("new_value", language));
-            ui.text_edit_singleline(&mut edit_state.new_trait_text);
-
-            if ui.button(t("apply_change", language)).clicked() {
-                let new_code = edit_state.new_trait_text.trim().to_string();
-                if !new_code.is_empty() {
-                    let old_name = details.trait_info.as_ref().map_or("", |t| t.name.as_str()).to_string();
-                    let old_level = details.trait_info.as_ref().map_or(0, |t| t.level);
-                    match SaveManager::modify_hero_upgrade(
-                        json_data,
-                        hero_key,
-                        "traitUpgrade",
-                        &new_code,
-                        old_level,
-                    ) {
-                        Ok(_) => {
-                            edit_state.add_log("INFO", &format!("✔特质已修改 {} →{}", old_name, new_code));
-                            if old_name.contains("Cornucopia") || new_code.contains("Cornucopia") {
-                                edit_state.add_log("INFO", "⚠️ 操作涉及雅贝那：建议重启游戏以刷新效果");
+            ui.horizontal(|ui| {
+                if ui.button(t("apply_btn", language)).clicked() {
+                    let new_code = edit_state.new_trait_text.trim().to_string();
+                    if !new_code.is_empty() {
+                        let old_name = details.trait_info.as_ref().map_or("", |t| t.name.as_str()).to_string();
+                        let old_level = details.trait_info.as_ref().map_or(0, |t| t.level);
+                        match SaveManager::modify_hero_upgrade(
+                            json_data,
+                            hero_key,
+                            "traitUpgrade",
+                            &new_code,
+                            old_level,
+                        ) {
+                            Ok(_) => {
+                                edit_state.add_log("INFO", &format!("✔特质已修改 {} →{}", old_name, new_code));
+                                if old_name.contains("Cornucopia") || new_code.contains("Cornucopia") {
+                                    edit_state.add_log("INFO", "⚠️ 操作涉及雅贝那：建议重启游戏以刷新效果");
+                                }
+                                if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) {
+                                    *recruited_heroes = heroes;
+                                    if let Some(updated_hero) = recruited_heroes.iter().find(|h| h.key == hero_key).cloned() {
+                                        *hero_details = Some(updated_hero);
+                                    }
+                                }
+                                edit_state.new_trait_text.clear();
                             }
-                            edit_state.new_trait_text.clear();
-                        }
-                        Err(e) => {
-                            edit_state.add_log("ERROR", &format!("修改失败: {}", e));
-                            if let Some(ref trait_info) = details.trait_info {
-                                edit_state.add_log("WARN", &format!("ID:{} →{}", trait_info.record_id, new_code));
+                            Err(e) => {
+                                edit_state.add_log("ERROR", &format!("修改失败: {}", e));
+                                if let Some(ref trait_info) = details.trait_info {
+                                    edit_state.add_log("WARN", &format!("ID:{} →{}", trait_info.record_id, new_code));
+                                }
                             }
                         }
                     }
                 }
-            }
+                ui.text_edit_singleline(&mut edit_state.new_trait_text);
+            });
 
             if details.trait_info.is_some() {
                 if ui.button(egui::RichText::new(t("remove_trait", language)).color(egui::Color32::LIGHT_RED)).clicked() {
@@ -2312,9 +2413,37 @@ impl ModifierApp {
 
             for entry in upgrade_dictionary::TRAIT_DICTIONARY.iter() {
                 ui.horizontal(|ui| {
-                    if ui.add(egui::Button::new("⚠").small()).clicked() {
-                        edit_state.new_trait_text = entry.code.to_string();
-                        edit_state.add_log("INFO", &format!("选择: {}", entry.chinese_name));
+                    if ui.add(egui::Button::new("⚠").small())
+                        .on_hover_text("直接应用")
+                        .clicked() {
+                        let old_name = details.trait_info.as_ref().map_or("", |t| t.name.as_str()).to_string();
+                        let old_level = details.trait_info.as_ref().map_or(0, |t| t.level);
+                        match SaveManager::modify_hero_upgrade(
+                            json_data,
+                            hero_key,
+                            "traitUpgrade",
+                            entry.code,
+                            old_level,
+                        ) {
+                            Ok(_) => {
+                                edit_state.add_log("INFO", &format!("✔特质已修改 {} →{}", old_name, entry.chinese_name));
+                                if old_name.contains("Cornucopia") || entry.code.contains("Cornucopia") {
+                                    edit_state.add_log("INFO", "⚠️ 操作涉及雅贝那：建议重启游戏以刷新效果");
+                                }
+                                if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) {
+                                    *recruited_heroes = heroes;
+                                    if let Some(updated_hero) = recruited_heroes.iter().find(|h| h.key == hero_key).cloned() {
+                                        *hero_details = Some(updated_hero);
+                                    }
+                                }
+                            }
+                            Err(e) => {
+                                edit_state.add_log("ERROR", &format!("修改失败: {}", e));
+                                if let Some(ref trait_info) = details.trait_info {
+                                    edit_state.add_log("WARN", &format!("ID:{} →{}", trait_info.record_id, entry.code));
+                                }
+                            }
+                        }
                     }
                     if ui.add(egui::Button::new("📋").small())
                         .on_hover_text("复制代码到剪贴板")
@@ -2346,9 +2475,37 @@ impl ModifierApp {
 
                 for entry in upgrade_dictionary::TRAIT_DICTIONARY_OLDGREY_FLAG.iter() {
                     ui.horizontal(|ui| {
-                        if ui.add(egui::Button::new("⚠").small()).clicked() {
-                            edit_state.new_trait_text = entry.code.to_string();
-                            edit_state.add_log("INFO", &format!("选择: {}", entry.chinese_name));
+                        if ui.add(egui::Button::new("⚠").small())
+                            .on_hover_text("直接应用")
+                            .clicked() {
+                            let old_name = details.trait_info.as_ref().map_or("", |t| t.name.as_str()).to_string();
+                            let old_level = details.trait_info.as_ref().map_or(0, |t| t.level);
+                            match SaveManager::modify_hero_upgrade(
+                                json_data,
+                                hero_key,
+                                "traitUpgrade",
+                                entry.code,
+                                old_level,
+                            ) {
+                                Ok(_) => {
+                                    edit_state.add_log("INFO", &format!("✔特质已修改 {} →{}", old_name, entry.chinese_name));
+                                    if old_name.contains("Cornucopia") || entry.code.contains("Cornucopia") {
+                                        edit_state.add_log("INFO", "⚠️ 操作涉及雅贝那：建议重启游戏以刷新效果");
+                                    }
+                                    if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) {
+                                        *recruited_heroes = heroes;
+                                        if let Some(updated_hero) = recruited_heroes.iter().find(|h| h.key == hero_key).cloned() {
+                                            *hero_details = Some(updated_hero);
+                                        }
+                                    }
+                                }
+                                Err(e) => {
+                                    edit_state.add_log("ERROR", &format!("修改失败: {}", e));
+                                    if let Some(ref trait_info) = details.trait_info {
+                                        edit_state.add_log("WARN", &format!("ID:{} →{}", trait_info.record_id, entry.code));
+                                    }
+                                }
+                            }
                         }
                         if ui.add(egui::Button::new("📋").small())
                             .on_hover_text("复制代码到剪贴板")
@@ -2381,9 +2538,37 @@ impl ModifierApp {
 
                 for entry in upgrade_dictionary::TRAIT_DICTIONARY_FUSION.iter() {
                     ui.horizontal(|ui| {
-                        if ui.add(egui::Button::new("⚠").small()).clicked() {
-                            edit_state.new_trait_text = entry.code.to_string();
-                            edit_state.add_log("INFO", &format!("选择: {}", entry.chinese_name));
+                        if ui.add(egui::Button::new("⚠").small())
+                            .on_hover_text("直接应用")
+                            .clicked() {
+                            let old_name = details.trait_info.as_ref().map_or("", |t| t.name.as_str()).to_string();
+                            let old_level = details.trait_info.as_ref().map_or(0, |t| t.level);
+                            match SaveManager::modify_hero_upgrade(
+                                json_data,
+                                hero_key,
+                                "traitUpgrade",
+                                entry.code,
+                                old_level,
+                            ) {
+                                Ok(_) => {
+                                    edit_state.add_log("INFO", &format!("✔特质已修改 {} →{}", old_name, entry.chinese_name));
+                                    if old_name.contains("Cornucopia") || entry.code.contains("Cornucopia") {
+                                        edit_state.add_log("INFO", "⚠️ 操作涉及雅贝那：建议重启游戏以刷新效果");
+                                    }
+                                    if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) {
+                                        *recruited_heroes = heroes;
+                                        if let Some(updated_hero) = recruited_heroes.iter().find(|h| h.key == hero_key).cloned() {
+                                            *hero_details = Some(updated_hero);
+                                        }
+                                    }
+                                }
+                                Err(e) => {
+                                    edit_state.add_log("ERROR", &format!("修改失败: {}", e));
+                                    if let Some(ref trait_info) = details.trait_info {
+                                        edit_state.add_log("WARN", &format!("ID:{} →{}", trait_info.record_id, entry.code));
+                                    }
+                                }
+                            }
                         }
                         if ui.add(egui::Button::new("📋").small())
                             .on_hover_text("复制代码到剪贴板")
