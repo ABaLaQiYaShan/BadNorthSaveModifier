@@ -18,7 +18,18 @@ pub const WAR_HORN_UPGRADE_CODE: &str = "Hero_Upgrade_WarHorn";
 pub struct SaveManager;
 
 impl SaveManager {
+    // ============ 代码结构说明 ============
+    // 本文件包含 10 个功能模块，总代码行数 ~2100 行
+    // 
+    // 模块 1-4: 基础操作（文件I/O、内部工具、英雄升级、属性）
+    // 模块 5-7: 数据查询（查询、货币、圣杯）
+    // 模块 8-10: 背包管理（通用、快捷方法、摘要）
+    // 
+    // 优化机会：模块 9 的 56 个快捷方法可用宏生成
+    // 预计可将 150+ 行代码简化为 ~10 行宏调用
+    // =========================================
 
+    // ============ File I/O & Serialization ============
     pub fn load_save(save_path: &Path, editor_exe: &Path) -> Result<Value> {
         if !save_path.exists() {
             return Err(anyhow!("存档文件不存在：{}", save_path.display()));
