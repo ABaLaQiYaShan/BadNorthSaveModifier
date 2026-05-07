@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
+#[allow(dead_code)]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SaveData {
     #[serde(default)]
@@ -10,6 +11,7 @@ pub struct SaveData {
 }
 
 impl SaveData {
+    #[allow(dead_code)]
     pub fn recruited_count(&self) -> usize {
         if let Some(records_obj) = self.records.as_object() {
             records_obj

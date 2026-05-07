@@ -10,12 +10,14 @@
 
 // ==================== 数据模型定义 ====================
 
+#[allow(dead_code)]
 pub struct UpgradeEntry {
     pub code: &'static str,
     pub chinese_name: &'static str,
     pub initial_level: i32,
 }
 
+#[allow(dead_code)]
 pub struct ClassEntry {
     pub code: &'static str,
     pub chinese_name: &'static str,
@@ -117,6 +119,7 @@ pub const ITEM_DICTIONARY_FUSION: &[UpgradeEntry] = ITEM_DICTIONARY_FUSION_NEW;
 
 /// 技能 · 原版（唯一版本）
 /// 游戏原生的6种技能（对应3个兵种职业）
+#[allow(dead_code)]
 pub const SKILL_DICTIONARY: &[UpgradeEntry] = &[
     UpgradeEntry { code: "Hero_Skill_Charge",       chinese_name: "冲锋",     initial_level: 1 },
     UpgradeEntry { code: "Hero_Skill_ArrowRain",    chinese_name: "箭雨",     initial_level: 1 },
@@ -131,6 +134,7 @@ pub const SKILL_DICTIONARY: &[UpgradeEntry] = &[
 
 /// 兵种 · 原版（唯一版本）
 /// 游戏原生的3种兵种（基础内容，各版本统一）
+#[allow(dead_code)]
 pub const CLASS_DICTIONARY: &[ClassEntry] = &[
     ClassEntry { code: "Hero_Class_Infantry", chinese_name: "步兵",   initial_level: 1 },
     ClassEntry { code: "Hero_Class_Archers",  chinese_name: "弓箭手", initial_level: 1 },

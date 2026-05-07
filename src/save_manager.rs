@@ -559,6 +559,7 @@ impl SaveManager {
         Ok(())
     }
 
+    #[allow(dead_code)]
     pub fn modify_hero_coins(
         json_value: &mut Value,
         hero_record_id: &str,
@@ -582,6 +583,7 @@ impl SaveManager {
     }
 
 
+    #[allow(dead_code)]
     pub fn modify_hero_helmet(
         json_value: &mut Value,
         hero_record_id: &str,
@@ -607,6 +609,7 @@ impl SaveManager {
         Err(anyhow!("Hue field not found for hero {}", hero_record_id))
     }
 
+    #[allow(dead_code)]
     pub fn modify_hero_crown(
         json_value: &mut Value,
         hero_record_id: &str,
@@ -1348,6 +1351,7 @@ impl SaveManager {
         Ok(())
     }
 
+    #[allow(dead_code)]
     pub fn set_inventory_grail_count(json_value: &mut Value, target: i32) -> Result<()> {
         if target < 0 {
             return Err(anyhow!("圣杯数量不能为负数"));
@@ -1365,6 +1369,7 @@ impl SaveManager {
         Ok(())
     }
 
+    #[allow(dead_code)]
     pub fn add_grail(json_value: &mut Value) -> Result<()> {
 
         let target: Option<(String, i32)> = {
@@ -1388,6 +1393,7 @@ impl SaveManager {
         }
     }
 
+    #[allow(dead_code)]
     pub fn remove_grail(json_value: &mut Value) -> Result<()> {
 
         let target_key: Option<String> = {
@@ -1866,7 +1872,9 @@ impl SaveManager {
     pub fn get_inventory_war_horn_count(json_value: &Value) -> i32 { Self::get_inventory_item_count(json_value, WAR_HORN_UPGRADE_CODE) }
     pub fn get_hero_war_horn_count(json_value: &Value) -> i32 { Self::get_hero_item_count(json_value, WAR_HORN_UPGRADE_CODE) }
     pub fn get_total_war_horn_count(json_value: &Value) -> i32 { Self::get_total_item_count(json_value, WAR_HORN_UPGRADE_CODE) }
+    #[allow(dead_code)]
     pub fn set_war_horn_count(json_value: &mut Value, target: i32) -> Result<()> { Self::set_item_count(json_value, WAR_HORN_UPGRADE_CODE, target) }
+    #[allow(dead_code)]
     pub fn increment_war_horn_count(json_value: &mut Value) -> Result<i32> {
         let current_total = Self::get_total_inventory_count(json_value);
         if current_total >= 20 {
@@ -1874,6 +1882,7 @@ impl SaveManager {
         }
         Self::increment_item_count(json_value, WAR_HORN_UPGRADE_CODE)
     }
+    #[allow(dead_code)]
     pub fn decrement_war_horn_count(json_value: &mut Value) -> Result<i32> { Self::decrement_item_count(json_value, WAR_HORN_UPGRADE_CODE) }
 
     pub fn get_all_inventory_items(json_value: &Value) -> Vec<(String, i32)> {
@@ -1988,37 +1997,42 @@ pub struct UpgradeInfo {
 }
 
 impl HeroDetails {
-
+    #[allow(dead_code)]
     pub fn class_display(&self) -> String {
         self.class_info.as_ref()
             .map(|u| format!("{}(L{})", u.name, u.level))
             .unwrap_or_else(|| "No Class".to_string())
     }
 
+    #[allow(dead_code)]
     pub fn item_display(&self) -> String {
         self.item_info.as_ref()
             .map(|u| format!("{}(L{})", u.name, u.level))
             .unwrap_or_else(|| "No Item".to_string())
     }
 
+    #[allow(dead_code)]
     pub fn trait_display(&self) -> String {
         self.trait_info.as_ref()
             .map(|u| u.name.clone())
             .unwrap_or_else(|| "No Trait".to_string())
     }
 
+    #[allow(dead_code)]
     pub fn skill_display(&self) -> String {
         self.skill_info.as_ref()
             .map(|u| format!("{}(L{})", u.name, u.level))
             .unwrap_or_else(|| "No Skill".to_string())
     }
 
+    #[allow(dead_code)]
     pub fn upgrade_display(&self) -> String {
         self.upgrade_info.as_ref()
             .map(|u| u.name.clone())
             .unwrap_or_else(|| "No Upgrade".to_string())
     }
 
+    #[allow(dead_code)]
     pub fn crown_display(&self) -> String {
         if self.has_crown {
             "✔已启用".to_string()
