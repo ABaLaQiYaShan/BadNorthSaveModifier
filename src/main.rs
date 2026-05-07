@@ -17,6 +17,137 @@ use save_manager::{
 };
 use settings::{AppSettings, ColorMode, Language};
 
+// ============ Constants ============
+const APP_TITLE: &str = "BadNorthSaveModifier存档修改器";
+const TOOLBAR_BTN_HEIGHT: f32 = 36.0;
+
+// ============ Enums ============
+#[derive(Clone)]
+enum AppState {
+    SelectEditorExe,
+    SelectSaveFile,
+    LoadDifferentSave {
+        json_data: Value,
+        previous_save_path: PathBuf,
+        recruited_heroes: Vec<HeroDetails>,
+        selected_hero_key: Option<String>,
+        hero_details: Option<HeroDetails>,
+        edit_state: EditState,
+    },
+    Editing {
+        json_data: Value,
+        save_path: PathBuf,
+        recruited_heroes: Vec<HeroDetails>,
+        selected_hero_key: Option<String>,
+        hero_details: Option<HeroDetails>,
+        edit_state: EditState,
+    },
+}
+
+#[derive(Clone, Debug, PartialEq)]
+enum LeftMenuSelection {
+    Settings,
+    HeroList(Option<String>),
+    CoinBankEdit,
+    GrailEdit,
+}
+
+impl Default for LeftMenuSelection {
+    fn default() -> Self {
+        Self::HeroList(None)
+    }
+}
+
+// ============ Structs ============
+#[derive(Clone)]
+struct EditState {
+    new_class_text: String,
+    new_item_text: String,
+    new_trait_text: String,
+    new_coins: String,
+    new_grails: String,
+    log_buffer: String,
+    log_scroll_offset: f32,
+    menu_selection: LeftMenuSelection,
+    commander_expanded: bool,
+    currency_expanded: bool,
+    new_bomb: String,
+    new_mine: String,
+    new_philosophers_stone: String,
+    new_size: String,
+    new_warhammer: String,
+    new_cornucopia: String,
+    new_war_horn: String,
+    custom_item_input: String,
+    oldgrey_flag_traits_expanded: bool,
+    fusion_traits_expanded: bool,
+    fusion_items_expanded: bool,
+}
+
+impl Default for EditState {
+    fn default() -> Self {
+        Self {
+            new_class_text: String::new(),
+            new_item_text: String::new(),
+            new_trait_text: String::new(),
+            new_coins: String::new(),
+            new_grails: String::new(),
+            log_buffer: String::new(),
+            log_scroll_offset: 0.0,
+            menu_selection: LeftMenuSelection::default(),
+            commander_expanded: true,
+            currency_expanded: true,
+            new_bomb: String::new(),
+            new_mine: String::new(),
+            new_philosophers_stone: String::new(),
+            new_size: String::new(),
+            new_warhammer: String::new(),
+            new_cornucopia: String::new(),
+            new_war_horn: String::new(),
+            custom_item_input: String::new(),
+            oldgrey_flag_traits_expanded: false,
+            fusion_traits_expanded: false,
+            fusion_items_expanded: false,
+        }
+    }
+}
+
+impl EditState {
+    fn add_log(&mut self, level: &str, message: &str) {
+        if level == "ERROR" {
+            let log_entry = format!("[{}] {}\n", level, message);
+            self.log_buffer.push_str(&log_entry);
+            self.log_scroll_offset = f32::INFINITY;
+        }
+
+        match level {
+            "ERROR" => error!("{}", message),
+            "WARN" => warn!("{}", message),
+            "INFO" => info!("{}", message),
+            _ => {}
+        }
+    }
+
+    fn clear_logs(&mut self) {
+        self.log_buffer.clear();
+        self.log_scroll_offset = 0.0;
+    }
+}
+
+pub struct ModifierApp {
+    state: AppState,
+    editor_exe: Option<PathBuf>,
+    error_message: Option<String>,
+    success_message: Option<String>,
+    message_timeout: f32,
+    app_settings: AppSettings,
+    transition_from_mode: ColorMode,
+    transition_to_mode: ColorMode,
+    color_transition_progress: f32,
+}
+
+// ============ Utility Functions ============
+// Font & Emoji Configuration
 fn configure_chinese_fonts(ctx: &egui::Context) {
     let mut fonts = egui::FontDefinitions::default();
 
@@ -531,6 +662,7 @@ fn toggle_btn(ui: &mut egui::Ui, label: &str, selected: bool) -> bool {
     }
 }
 
+// ============ Entry Point ============
 fn main() -> Result<(), eframe::Error> {
     env_logger::init();
 
@@ -578,151 +710,7 @@ fn main() -> Result<(), eframe::Error> {
     )
 }
 
-#[derive(Clone)]
-enum AppState {
-
-    SelectEditorExe,
-
-    SelectSaveFile,
-
-    LoadDifferentSave {
-        json_data: Value,
-        previous_save_path: PathBuf,
-        recruited_heroes: Vec<HeroDetails>,
-        selected_hero_key: Option<String>,
-        hero_details: Option<HeroDetails>,
-        edit_state: EditState,
-    },
-
-    Editing {
-        json_data: Value,
-        save_path: PathBuf,
-        recruited_heroes: Vec<HeroDetails>,
-        selected_hero_key: Option<String>,
-        hero_details: Option<HeroDetails>,
-        edit_state: EditState,
-    },
-}
-
-#[derive(Clone, Debug, PartialEq)]
-enum LeftMenuSelection {
-
-    Settings,
-
-    HeroList(Option<String>),
-
-    CoinBankEdit,
-
-    GrailEdit,
-}
-
-impl Default for LeftMenuSelection {
-    fn default() -> Self {
-        Self::HeroList(None)
-    }
-}
-
-#[derive(Clone)]
-struct EditState {
-    new_class_text: String,
-    new_item_text: String,
-    new_trait_text: String,
-    new_coins: String,
-    new_grails: String,
-    log_buffer: String,
-    log_scroll_offset: f32,
-
-    menu_selection: LeftMenuSelection,
-
-    commander_expanded: bool,
-
-    currency_expanded: bool,
-
-    new_bomb: String,
-    new_mine: String,
-    new_philosophers_stone: String,
-    new_size: String,
-    new_warhammer: String,
-    new_cornucopia: String,
-    new_war_horn: String,
-
-    custom_item_input: String,
-
-    oldgrey_flag_traits_expanded: bool,
-
-    fusion_traits_expanded: bool,
-
-    fusion_items_expanded: bool,
-}
-
-impl Default for EditState {
-    fn default() -> Self {
-        Self {
-            new_class_text: String::new(),
-            new_item_text: String::new(),
-            new_trait_text: String::new(),
-            new_coins: String::new(),
-            new_grails: String::new(),
-            log_buffer: String::new(),
-            log_scroll_offset: 0.0,
-            menu_selection: LeftMenuSelection::default(),
-            commander_expanded: true,
-            currency_expanded: true,
-            new_bomb: String::new(),
-            new_mine: String::new(),
-            new_philosophers_stone: String::new(),
-            new_size: String::new(),
-            new_warhammer: String::new(),
-            new_cornucopia: String::new(),
-            new_war_horn: String::new(),
-            custom_item_input: String::new(),
-            oldgrey_flag_traits_expanded: false,
-            fusion_traits_expanded: false,
-            fusion_items_expanded: false,
-        }
-    }
-}
-
-impl EditState {
-    fn add_log(&mut self, level: &str, message: &str) {
-
-
-        if level == "ERROR" {
-            let log_entry = format!("[{}] {}\n", level, message);
-            self.log_buffer.push_str(&log_entry);
-
-            self.log_scroll_offset = f32::INFINITY;
-        }
-
-        match level {
-            "ERROR" => error!("{}", message),
-            "WARN" => warn!("{}", message),
-            "INFO" => info!("{}", message),
-            _ => {}
-        }
-    }
-
-    fn clear_logs(&mut self) {
-        self.log_buffer.clear();
-        self.log_scroll_offset = 0.0;
-    }
-}
-
-pub struct ModifierApp {
-    state: AppState,
-    editor_exe: Option<PathBuf>,
-    error_message: Option<String>,
-    success_message: Option<String>,
-    message_timeout: f32,
-    app_settings: AppSettings,
-
-    transition_from_mode: ColorMode,
-
-    transition_to_mode: ColorMode,
-
-    color_transition_progress: f32,
-}
-
+// ============ Implementations ============
 impl Default for ModifierApp {
     fn default() -> Self {
         let app_settings = AppSettings::load();
@@ -785,10 +773,6 @@ impl eframe::App for ModifierApp {
         });
     }
 }
-
-const APP_TITLE: &str = "BadNorthSaveModifier存档修改器";
-
-const TOOLBAR_BTN_HEIGHT: f32 = 36.0;
 
 impl ModifierApp {
 
