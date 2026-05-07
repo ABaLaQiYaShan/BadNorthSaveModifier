@@ -1943,6 +1943,7 @@ impl SaveManager {
             .sum()
     }
 
+    #[allow(dead_code)]
     pub fn replace_inventory_item(json_value: &mut Value, old_code: &str, new_code: &str) -> Result<i32> {
         let (_, array_id) = Self::find_inventory_refs(json_value)?;
         
