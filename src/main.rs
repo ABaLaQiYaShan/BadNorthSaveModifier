@@ -534,6 +534,8 @@ fn t(key: &str, lang: &Language) -> &'static str {
             "collapse_label"          => "▼ 收起",
             "expand_label"            => "▶ 展开",
             "quick_apply_hint"        => "快速应用",
+            "mod_items_title"         => "魔改版- 专属装备",
+            "mod_traits_title"        => "魔改版- 专属特质",
             "fusion_items_title"      => "融合版- 专属装备",
             "fusion_traits_title"     => "融合版- 专属特质",
             "oldgrey_flag_traits_title" => "旧灰复燃的战旗- 专属特质",
@@ -656,6 +658,8 @@ fn t(key: &str, lang: &Language) -> &'static str {
             "collapse_label"          => "▼ Collapse",
             "expand_label"            => "▶ Expand",
             "quick_apply_hint"        => "Quick Apply",
+            "mod_items_title"         => "Mod - Exclusive Equipment",
+            "mod_traits_title"        => "Mod - Exclusive Traits",
             "fusion_items_title"      => "Fusion - Exclusive Equipment",
             "fusion_traits_title"     => "Fusion - Exclusive Traits",
             "oldgrey_flag_traits_title" => "Rebirth Flag - Exclusive Traits",
@@ -1868,21 +1872,21 @@ impl ModifierApp {
 
                                     ui.add_space(8.0);
 
-                                    // ===== 融合版- 专属装备 =====
-                                    let fusion_base = "融合版- 专属装备";
-                                    let fusion_label = if edit_state.fusion_items_expanded {
-                                        format!("{} ▼", fusion_base)
+                                    // ===== 魔改版- 专属装备 =====
+                                    let mod_base = "魔改版- 专属装备";
+                                    let mod_label = if edit_state.mod_items_expanded {
+                                        format!("{} ▼", mod_base)
                                     } else {
-                                        format!("{} ▶", fusion_base)
+                                        format!("{} ▶", mod_base)
                                     };
-                                    if ui.button(egui::RichText::new(fusion_label).strong()).clicked() {
-                                        edit_state.fusion_items_expanded = !edit_state.fusion_items_expanded;
+                                    if ui.button(egui::RichText::new(mod_label).strong()).clicked() {
+                                        edit_state.mod_items_expanded = !edit_state.mod_items_expanded;
                                     }
                                     
-                                    if edit_state.fusion_items_expanded {
-                                        for entry in upgrade_dictionary::ITEM_DICTIONARY_FUSION.iter() {
-                                            let input_key = format!("fusion_{}", entry.code);
-                                            let input_value = edit_state.fusion_item_inputs.get(&input_key).cloned().unwrap_or_default();
+                                    if edit_state.mod_items_expanded {
+                                        for entry in upgrade_dictionary::ITEM_DICTIONARY_MOD_VERSION.iter() {
+                                            let input_key = format!("mod_{}", entry.code);
+                                            let input_value = edit_state.mod_item_inputs.get(&input_key).cloned().unwrap_or_default();
                                             
                                             egui::Frame::group(ui.style()).show(ui, |ui| {
                                                 ui.vertical(|ui| {
@@ -1955,21 +1959,21 @@ impl ModifierApp {
 
                                     ui.add_space(8.0);
 
-                                    // ===== 魔改版- 专属装备 =====
-                                    let mod_base = "魔改版- 专属装备";
-                                    let mod_label = if edit_state.mod_items_expanded {
-                                        format!("{} ▼", mod_base)
+                                    // ===== 融合版- 专属装备 =====
+                                    let fusion_base = "融合版- 专属装备";
+                                    let fusion_label = if edit_state.fusion_items_expanded {
+                                        format!("{} ▼", fusion_base)
                                     } else {
-                                        format!("{} ▶", mod_base)
+                                        format!("{} ▶", fusion_base)
                                     };
-                                    if ui.button(egui::RichText::new(mod_label).strong()).clicked() {
-                                        edit_state.mod_items_expanded = !edit_state.mod_items_expanded;
+                                    if ui.button(egui::RichText::new(fusion_label).strong()).clicked() {
+                                        edit_state.fusion_items_expanded = !edit_state.fusion_items_expanded;
                                     }
                                     
-                                    if edit_state.mod_items_expanded {
-                                        for entry in upgrade_dictionary::ITEM_DICTIONARY_MOD_VERSION.iter() {
-                                            let input_key = format!("mod_{}", entry.code);
-                                            let input_value = edit_state.mod_item_inputs.get(&input_key).cloned().unwrap_or_default();
+                                    if edit_state.fusion_items_expanded {
+                                        for entry in upgrade_dictionary::ITEM_DICTIONARY_FUSION.iter() {
+                                            let input_key = format!("fusion_{}", entry.code);
+                                            let input_value = edit_state.fusion_item_inputs.get(&input_key).cloned().unwrap_or_default();
                                             
                                             egui::Frame::group(ui.style()).show(ui, |ui| {
                                                 ui.vertical(|ui| {
@@ -2009,7 +2013,7 @@ impl ModifierApp {
                                                                     match SaveManager::set_item_count(json_data, entry.code, n) {
                                                                         Ok(_) => {
                                                                             edit_state.add_log("INFO", &format!("✔{} 已设置为 {}", entry.chinese_name, n));
-                                                                            edit_state.mod_item_inputs.insert(input_key.clone(), String::new());
+                                                                            edit_state.fusion_item_inputs.insert(input_key.clone(), String::new());
                                                                             if let Ok(heroes) = SaveManager::get_recruited_heroes(json_data) { *recruited_heroes = heroes; }
                                                                         }
                                                                         Err(e) => edit_state.add_log("ERROR", &format!("修改 {} 失败: {}", entry.chinese_name, e)),
@@ -2018,7 +2022,7 @@ impl ModifierApp {
                                                             }
                                                         }
                                                     });
-                                                    edit_state.mod_item_inputs.insert(input_key, input_str);
+                                                    edit_state.fusion_item_inputs.insert(input_key, input_str);
                                                     
                                                     ui.horizontal(|ui| {
                                                         if ui.button("[+1]").clicked() {
@@ -2463,25 +2467,25 @@ impl ModifierApp {
             }
 
             ui.separator();
-            ui.label(egui::RichText::new(t("fusion_items_title", language)).strong());
-            let fusion_label = if edit_state.fusion_items_expanded {
+            ui.label(egui::RichText::new("魔改版- 专属装备").strong());
+            let mod_label = if edit_state.mod_items_expanded {
                 t("collapse_label", language)
             } else {
                 t("expand_label", language)
             };
-            let is_fusion_active = edit_state.fusion_items_expanded;
-            if ui.selectable_label(is_fusion_active, fusion_label).clicked() {
-                edit_state.fusion_items_expanded = !edit_state.fusion_items_expanded;
+            let is_mod_active = edit_state.mod_items_expanded;
+            if ui.selectable_label(is_mod_active, mod_label).clicked() {
+                edit_state.mod_items_expanded = !edit_state.mod_items_expanded;
             }
 
-            if edit_state.fusion_items_expanded {
+            if edit_state.mod_items_expanded {
 
                 ui.horizontal(|ui| {
                     ui.small(egui::RichText::new(t("quick_apply", language)).small().strong());
                     ui.small(egui::RichText::new("复制").small().strong());
                 });
 
-                for entry in upgrade_dictionary::ITEM_DICTIONARY_FUSION.iter() {
+                for entry in upgrade_dictionary::ITEM_DICTIONARY_MOD_VERSION.iter() {
                     ui.horizontal(|ui| {
                         if ui.add(egui::Button::new("⚡").small())
                             .on_hover_text(t("quick_apply_hint", language))
@@ -2527,25 +2531,25 @@ impl ModifierApp {
             }
 
             ui.separator();
-            ui.label(egui::RichText::new("魔改版- 专属装备").strong());
-            let mod_label = if edit_state.mod_items_expanded {
+            ui.label(egui::RichText::new(t("fusion_items_title", language)).strong());
+            let fusion_label = if edit_state.fusion_items_expanded {
                 t("collapse_label", language)
             } else {
                 t("expand_label", language)
             };
-            let is_mod_active = edit_state.mod_items_expanded;
-            if ui.selectable_label(is_mod_active, mod_label).clicked() {
-                edit_state.mod_items_expanded = !edit_state.mod_items_expanded;
+            let is_fusion_active = edit_state.fusion_items_expanded;
+            if ui.selectable_label(is_fusion_active, fusion_label).clicked() {
+                edit_state.fusion_items_expanded = !edit_state.fusion_items_expanded;
             }
 
-            if edit_state.mod_items_expanded {
+            if edit_state.fusion_items_expanded {
 
                 ui.horizontal(|ui| {
                     ui.small(egui::RichText::new(t("quick_apply", language)).small().strong());
                     ui.small(egui::RichText::new("复制").small().strong());
                 });
 
-                for entry in upgrade_dictionary::ITEM_DICTIONARY_MOD_VERSION.iter() {
+                for entry in upgrade_dictionary::ITEM_DICTIONARY_FUSION.iter() {
                     ui.horizontal(|ui| {
                         if ui.add(egui::Button::new("⚡").small())
                             .on_hover_text(t("quick_apply_hint", language))
@@ -2790,25 +2794,25 @@ impl ModifierApp {
             }
 
             ui.separator();
-            ui.label(egui::RichText::new(t("fusion_traits_title", language)).strong());
-            let fusion_label = if edit_state.fusion_traits_expanded {
+            ui.label(egui::RichText::new(t("mod_traits_title", language)).strong());
+            let mod_label = if edit_state.mod_traits_expanded {
                 t("collapse_label", language)
             } else {
                 t("expand_label", language)
             };
-            let is_fusion_active = edit_state.fusion_traits_expanded;
-            if ui.selectable_label(is_fusion_active, fusion_label).clicked() {
-                edit_state.fusion_traits_expanded = !edit_state.fusion_traits_expanded;
+            let is_mod_active = edit_state.mod_traits_expanded;
+            if ui.selectable_label(is_mod_active, mod_label).clicked() {
+                edit_state.mod_traits_expanded = !edit_state.mod_traits_expanded;
             }
 
-            if edit_state.fusion_traits_expanded {
+            if edit_state.mod_traits_expanded {
 
                 ui.horizontal(|ui| {
                     ui.small(egui::RichText::new(t("quick_apply", language)).small().strong());
                     ui.small(egui::RichText::new("复制").small().strong());
                 });
 
-                for entry in upgrade_dictionary::TRAIT_DICTIONARY_FUSION.iter() {
+                for entry in upgrade_dictionary::TRAIT_DICTIONARY_MOD_VERSION.iter() {
                     ui.horizontal(|ui| {
                         if ui.add(egui::Button::new("⚡").small())
                             .on_hover_text(t("quick_apply_hint", language))
@@ -2854,25 +2858,25 @@ impl ModifierApp {
             }
 
             ui.separator();
-            ui.label(egui::RichText::new("魔改版- 专属特质").strong());
-            let mod_label = if edit_state.mod_traits_expanded {
+            ui.label(egui::RichText::new(t("fusion_traits_title", language)).strong());
+            let fusion_label = if edit_state.fusion_traits_expanded {
                 t("collapse_label", language)
             } else {
                 t("expand_label", language)
             };
-            let is_mod_active = edit_state.mod_traits_expanded;
-            if ui.selectable_label(is_mod_active, mod_label).clicked() {
-                edit_state.mod_traits_expanded = !edit_state.mod_traits_expanded;
+            let is_fusion_active = edit_state.fusion_traits_expanded;
+            if ui.selectable_label(is_fusion_active, fusion_label).clicked() {
+                edit_state.fusion_traits_expanded = !edit_state.fusion_traits_expanded;
             }
 
-            if edit_state.mod_traits_expanded {
+            if edit_state.fusion_traits_expanded {
 
                 ui.horizontal(|ui| {
                     ui.small(egui::RichText::new(t("quick_apply", language)).small().strong());
                     ui.small(egui::RichText::new("复制").small().strong());
                 });
 
-                for entry in upgrade_dictionary::TRAIT_DICTIONARY_MOD_VERSION.iter() {
+                for entry in upgrade_dictionary::TRAIT_DICTIONARY_FUSION.iter() {
                     ui.horizontal(|ui| {
                         if ui.add(egui::Button::new("⚡").small())
                             .on_hover_text(t("quick_apply_hint", language))

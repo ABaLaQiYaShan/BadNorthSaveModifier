@@ -45,16 +45,16 @@ pub const ITEM_DICTIONARY_ORIGINAL: &[UpgradeEntry] = &[
 pub const ITEM_DICTIONARY_FUSION_NEW: &[UpgradeEntry] = &[
     UpgradeEntry { code: "Hero_Item_Charge",       chinese_name: "盾冲",     initial_level: 0 },
     UpgradeEntry { code: "Hero_Item_DeathZone",    chinese_name: "死亡区域", initial_level: 0 },
-    UpgradeEntry { code: "Hero_Upgrade_FrontArmor", chinese_name: "正面护甲", initial_level: 0 },
-    UpgradeEntry { code: "Hero_Upgrade_SpeedUp",    chinese_name: "心灵加速器", initial_level: 0 },
+    UpgradeEntry { code: "Hero_Item_FrontArmor", chinese_name: "正面护甲", initial_level: 0 },
+    UpgradeEntry { code: "Hero_Item_SpeedUp",    chinese_name: "心灵加速器", initial_level: 0 },
 ];
 
 /// 装备 · 魔改版（专属集合）
 /// 魔改版专属的装备集合
 pub const ITEM_DICTIONARY_MOD_VERSION: &[UpgradeEntry] = &[
     UpgradeEntry { code: "Hero_Item_Charge",       chinese_name: "盾冲",     initial_level: 0 },
-    UpgradeEntry { code: "Hero_Upgrade_FrontArmor", chinese_name: "正面护甲", initial_level: 0 },
-    UpgradeEntry { code: "Hero_Upgrade_SpeedUp",    chinese_name: "心灵加速器", initial_level: 0 },
+    UpgradeEntry { code: "Hero_Item_FrontArmor", chinese_name: "正面护甲", initial_level: 0 },
+    UpgradeEntry { code: "Hero_Item_SpeedUp",    chinese_name: "心灵加速器", initial_level: 0 },
 ];
 
 // ==================== 特质字典 (Traits) ====================
@@ -121,7 +121,7 @@ pub const TRAIT_DICTIONARY_FUSION_NEW: &[UpgradeEntry] = &[
 /// 魔改版专属的特质集合（11个）
 pub const TRAIT_DICTIONARY_MOD_VERSION: &[UpgradeEntry] = &[
     UpgradeEntry { code: "Hero_Trait_AxeThrower",        chinese_name: "投斧大队",     initial_level: 0 },
-    UpgradeEntry { code: "Hero_Trait_Thorn",             chinese_name: "荆棘",         initial_level: 0 },
+    UpgradeEntry { code: "Hero_Trait_Thorns",            chinese_name: "荆棘",         initial_level: 0 },
     UpgradeEntry { code: "Hero_Trait_Regenerative",      chinese_name: "医疗训练",     initial_level: 0 },
     UpgradeEntry { code: "Hero_Trait_CheaperClass",      chinese_name: "快速精通",     initial_level: 0 },
     UpgradeEntry { code: "Hero_Trait_Jumper",            chinese_name: "跳劈大队",     initial_level: 0 },
