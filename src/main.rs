@@ -284,7 +284,7 @@ fn t(key: &str, lang: &Language) -> &'static str {
             "current"      => "当前",
             "level"        => "等级",
             "new_value"    => "新值",
-            "quick_select" => "快速选择",
+            "quick_select" => "快速应用",
             "apply_change" => "✔应用变更",
             "no_class"     => "( 无兵种)",
             "no_item"      => "当前: ( 无装备)",
@@ -395,7 +395,7 @@ fn t(key: &str, lang: &Language) -> &'static str {
             "current"      => "Current",
             "level"        => "Level",
             "new_value"    => "New Value",
-            "quick_select" => "Quick Select",
+            "quick_select" => "Quick Apply",
             "apply_change" => "✔Apply",
             "no_class"     => "( No Class )",
             "no_item"      => "Current: ( No Item )",
@@ -1268,7 +1268,7 @@ impl ModifierApp {
                                                 } else if total_inv >= 15 {
                                                     egui::Color32::YELLOW
                                                 } else {
-                                                    egui::Color32::LIGHT_GREEN
+                                                    egui::Color32::from_rgb(34, 139, 34)
                                                 };
                                                 ui.monospace(egui::RichText::new(format!("{} / 20", total_inv)).color(color));
                                                 ui.label(egui::RichText::new(t("inv_overview_limit", &lang)).small().color(egui::Color32::GRAY));
@@ -1283,7 +1283,7 @@ impl ModifierApp {
                                                 ui.label(t("inv_overview_items", &lang));
                                                 for (item_code, count) in &all_items {
                                                     ui.horizontal(|ui| {
-                                                        ui.monospace(egui::RichText::new(item_code).color(egui::Color32::LIGHT_GREEN));
+                                                        ui.monospace(egui::RichText::new(item_code).color(egui::Color32::from_rgb(34, 139, 34)));
                                                         ui.monospace(format!("× {}", count));
                                                     });
                                                 }
@@ -1349,7 +1349,7 @@ impl ModifierApp {
                                             });
                                             ui.horizontal(|ui| {
                                                 ui.label(t("inv_item_code", &lang));
-                                                ui.monospace(egui::RichText::new(GRAIL_UPGRADE_CODE).color(egui::Color32::LIGHT_GREEN));
+                                                ui.monospace(egui::RichText::new(GRAIL_UPGRADE_CODE).color(egui::Color32::from_rgb(34, 139, 34)));
                                                 if ui.add(egui::Button::new("📋").small()).on_hover_text(GRAIL_UPGRADE_CODE).clicked() {
                                                     ui.output_mut(|o| o.copied_text = GRAIL_UPGRADE_CODE.to_string());
                                                     edit_state.add_log("INFO", &format!("📋 已复制 {}", GRAIL_UPGRADE_CODE));
@@ -1415,7 +1415,7 @@ impl ModifierApp {
                                             });
                                             ui.horizontal(|ui| {
                                                 ui.label(t("inv_item_code", &lang));
-                                                ui.monospace(egui::RichText::new(BOMB_UPGRADE_CODE).color(egui::Color32::LIGHT_GREEN));
+                                                ui.monospace(egui::RichText::new(BOMB_UPGRADE_CODE).color(egui::Color32::from_rgb(34, 139, 34)));
                                                 if ui.add(egui::Button::new("📋").small()).on_hover_text(BOMB_UPGRADE_CODE).clicked() {
                                                     ui.output_mut(|o| o.copied_text = BOMB_UPGRADE_CODE.to_string());
                                                     edit_state.add_log("INFO", &format!("📋 已复制 {}", BOMB_UPGRADE_CODE));
@@ -1481,7 +1481,7 @@ impl ModifierApp {
                                             });
                                             ui.horizontal(|ui| {
                                                 ui.label(t("inv_item_code", &lang));
-                                                ui.monospace(egui::RichText::new(MINE_UPGRADE_CODE).color(egui::Color32::LIGHT_GREEN));
+                                                ui.monospace(egui::RichText::new(MINE_UPGRADE_CODE).color(egui::Color32::from_rgb(34, 139, 34)));
                                                 if ui.add(egui::Button::new("📋").small()).on_hover_text(MINE_UPGRADE_CODE).clicked() {
                                                     ui.output_mut(|o| o.copied_text = MINE_UPGRADE_CODE.to_string());
                                                     edit_state.add_log("INFO", &format!("📋 已复制 {}", MINE_UPGRADE_CODE));
@@ -1547,7 +1547,7 @@ impl ModifierApp {
                                             });
                                             ui.horizontal(|ui| {
                                                 ui.label(t("inv_item_code", &lang));
-                                                ui.monospace(egui::RichText::new(PHILOSOPHERS_STONE_UPGRADE_CODE).color(egui::Color32::LIGHT_GREEN));
+                                                ui.monospace(egui::RichText::new(PHILOSOPHERS_STONE_UPGRADE_CODE).color(egui::Color32::from_rgb(34, 139, 34)));
                                                 if ui.add(egui::Button::new("📋").small()).on_hover_text(PHILOSOPHERS_STONE_UPGRADE_CODE).clicked() {
                                                     ui.output_mut(|o| o.copied_text = PHILOSOPHERS_STONE_UPGRADE_CODE.to_string());
                                                     edit_state.add_log("INFO", &format!("📋 已复制 {}", PHILOSOPHERS_STONE_UPGRADE_CODE));
@@ -1613,7 +1613,7 @@ impl ModifierApp {
                                             });
                                             ui.horizontal(|ui| {
                                                 ui.label(t("inv_item_code", &lang));
-                                                ui.monospace(egui::RichText::new(SIZE_UPGRADE_CODE).color(egui::Color32::LIGHT_GREEN));
+                                                ui.monospace(egui::RichText::new(SIZE_UPGRADE_CODE).color(egui::Color32::from_rgb(34, 139, 34)));
                                                 if ui.add(egui::Button::new("📋").small()).on_hover_text(SIZE_UPGRADE_CODE).clicked() {
                                                     ui.output_mut(|o| o.copied_text = SIZE_UPGRADE_CODE.to_string());
                                                     edit_state.add_log("INFO", &format!("📋 已复制 {}", SIZE_UPGRADE_CODE));
@@ -1679,7 +1679,7 @@ impl ModifierApp {
                                             });
                                             ui.horizontal(|ui| {
                                                 ui.label(t("inv_item_code", &lang));
-                                                ui.monospace(egui::RichText::new(WARHAMMER_UPGRADE_CODE).color(egui::Color32::LIGHT_GREEN));
+                                                ui.monospace(egui::RichText::new(WARHAMMER_UPGRADE_CODE).color(egui::Color32::from_rgb(34, 139, 34)));
                                                 if ui.add(egui::Button::new("📋").small()).on_hover_text(WARHAMMER_UPGRADE_CODE).clicked() {
                                                     ui.output_mut(|o| o.copied_text = WARHAMMER_UPGRADE_CODE.to_string());
                                                     edit_state.add_log("INFO", &format!("📋 已复制 {}", WARHAMMER_UPGRADE_CODE));
@@ -1745,7 +1745,7 @@ impl ModifierApp {
                                             });
                                             ui.horizontal(|ui| {
                                                 ui.label(t("inv_item_code", &lang));
-                                                ui.monospace(egui::RichText::new(CORNUCOPIA_UPGRADE_CODE).color(egui::Color32::LIGHT_GREEN));
+                                                ui.monospace(egui::RichText::new(CORNUCOPIA_UPGRADE_CODE).color(egui::Color32::from_rgb(34, 139, 34)));
                                                 if ui.add(egui::Button::new("📋").small()).on_hover_text(CORNUCOPIA_UPGRADE_CODE).clicked() {
                                                     ui.output_mut(|o| o.copied_text = CORNUCOPIA_UPGRADE_CODE.to_string());
                                                     edit_state.add_log("INFO", &format!("📋 已复制 {}", CORNUCOPIA_UPGRADE_CODE));
@@ -1812,7 +1812,7 @@ impl ModifierApp {
                                             ui.add_enabled_ui(false, |ui| {
                                                 ui.horizontal(|ui| {
                                                     ui.label(t("inv_item_code", &lang));
-                                                    ui.monospace(egui::RichText::new(WAR_HORN_UPGRADE_CODE).color(egui::Color32::LIGHT_GREEN));
+                                                    ui.monospace(egui::RichText::new(WAR_HORN_UPGRADE_CODE).color(egui::Color32::from_rgb(34, 139, 34)));
                                                     ui.add(egui::Button::new("📋").small()).on_hover_text(WAR_HORN_UPGRADE_CODE);
                                                 });
                                                 ui.separator();
@@ -2022,7 +2022,7 @@ impl ModifierApp {
                 });
                 ui.horizontal(|ui| {
                     ui.small(t("current", language));
-                    ui.monospace(egui::RichText::new(&class_info.name).color(egui::Color32::LIGHT_GREEN));
+                    ui.monospace(egui::RichText::new(&class_info.name).color(egui::Color32::from_rgb(34, 139, 34)));
                 });
                 ui.horizontal(|ui| {
                     ui.small(t("level", language));
@@ -2064,16 +2064,16 @@ impl ModifierApp {
                 });
 
                 ui.separator();
-                ui.label(egui::RichText::new(t("quick_select", language)).small().strong());
+                ui.label(egui::RichText::new("快速应用").small().strong());
 
                 ui.horizontal(|ui| {
-                    ui.small(egui::RichText::new("").small());
+                    ui.small(egui::RichText::new("快速应用").small().strong());
                     ui.small(egui::RichText::new("复制").small().strong());
                 });
 
                 for entry in class_dictionary::CLASS_DICTIONARY.iter() {
                     ui.horizontal(|ui| {
-                        if ui.add(egui::Button::new("⚠").small())
+                        if ui.add(egui::Button::new("⚡").small())
                             .on_hover_text("直接应用")
                             .clicked() {
                             match SaveManager::modify_hero_upgrade(
@@ -2136,7 +2136,7 @@ impl ModifierApp {
                 });
                 ui.horizontal(|ui| {
                     ui.small(t("current", language));
-                    ui.monospace(egui::RichText::new(&item_info.name).color(egui::Color32::LIGHT_GREEN));
+                    ui.monospace(egui::RichText::new(&item_info.name).color(egui::Color32::from_rgb(34, 139, 34)));
                 });
                 ui.horizontal(|ui| {
                     ui.small(t("level", language));
@@ -2201,17 +2201,17 @@ impl ModifierApp {
             }
 
             ui.separator();
-            ui.label(egui::RichText::new(t("quick_select", language)).small().strong());
+            ui.label(egui::RichText::new("快速应用").small().strong());
 
             ui.horizontal(|ui| {
-                ui.small(egui::RichText::new("").small());
+                ui.small(egui::RichText::new("快速应用").small().strong());
                 ui.small(egui::RichText::new("复制").small().strong());
             });
 
             for entry in upgrade_dictionary::UPGRADE_DICTIONARY.iter() {
                 let is_consumable = entry.code == CORNUCOPIA_UPGRADE_CODE;
                 ui.horizontal(|ui| {
-                    if ui.add_enabled(!is_consumable, egui::Button::new("⚠").small())
+                    if ui.add_enabled(!is_consumable, egui::Button::new("⚡").small())
                         .on_hover_text("直接应用")
                         .clicked() {
                         let old_name = details.item_info.as_ref().map_or("", |i| i.name.as_str()).to_string();
@@ -2270,13 +2270,13 @@ impl ModifierApp {
             if edit_state.fusion_items_expanded {
 
                 ui.horizontal(|ui| {
-                    ui.small(egui::RichText::new("").small());
+                    ui.small(egui::RichText::new("快速应用").small().strong());
                     ui.small(egui::RichText::new("复制").small().strong());
                 });
 
                 for entry in upgrade_dictionary::ITEM_DICTIONARY_FUSION.iter() {
                     ui.horizontal(|ui| {
-                        if ui.add(egui::Button::new("⚠").small())
+                        if ui.add(egui::Button::new("⚡").small())
                             .on_hover_text("直接应用")
                             .clicked() {
                             let old_name = details.item_info.as_ref().map_or("", |i| i.name.as_str()).to_string();
@@ -2344,7 +2344,7 @@ impl ModifierApp {
                 });
                 ui.horizontal(|ui| {
                     ui.small(t("current", language));
-                    ui.monospace(egui::RichText::new(&trait_info.name).color(egui::Color32::LIGHT_GREEN));
+                    ui.monospace(egui::RichText::new(&trait_info.name).color(egui::Color32::from_rgb(34, 139, 34)));
                 });
             } else {
                 ui.colored_label(egui::Color32::GRAY, t("no_trait", language));
@@ -2405,16 +2405,16 @@ impl ModifierApp {
             }
 
             ui.separator();
-            ui.label(egui::RichText::new(t("quick_select", language)).small().strong());
+            ui.label(egui::RichText::new("快速应用").small().strong());
 
             ui.horizontal(|ui| {
-                ui.small(egui::RichText::new("").small());
+                ui.small(egui::RichText::new("快速应用").small().strong());
                 ui.small(egui::RichText::new("复制").small().strong());
             });
 
             for entry in upgrade_dictionary::TRAIT_DICTIONARY.iter() {
                 ui.horizontal(|ui| {
-                    if ui.add(egui::Button::new("⚠").small())
+                    if ui.add(egui::Button::new("⚡").small())
                         .on_hover_text("直接应用")
                         .clicked() {
                         let old_name = details.trait_info.as_ref().map_or("", |t| t.name.as_str()).to_string();
@@ -2476,7 +2476,7 @@ impl ModifierApp {
 
                 for entry in upgrade_dictionary::TRAIT_DICTIONARY_OLDGREY_FLAG.iter() {
                     ui.horizontal(|ui| {
-                        if ui.add(egui::Button::new("⚠").small())
+                        if ui.add(egui::Button::new("⚡").small())
                             .on_hover_text("直接应用")
                             .clicked() {
                             let old_name = details.trait_info.as_ref().map_or("", |t| t.name.as_str()).to_string();
@@ -2539,7 +2539,7 @@ impl ModifierApp {
 
                 for entry in upgrade_dictionary::TRAIT_DICTIONARY_FUSION.iter() {
                     ui.horizontal(|ui| {
-                        if ui.add(egui::Button::new("⚠").small())
+                        if ui.add(egui::Button::new("⚡").small())
                             .on_hover_text("直接应用")
                             .clicked() {
                             let old_name = details.trait_info.as_ref().map_or("", |t| t.name.as_str()).to_string();
