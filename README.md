@@ -171,11 +171,11 @@ BadNorthSaveModifier/
 
 ### 许可证
 
-根据项目具体许可证要求填写（如 MIT、Apache 2.0 等）
+本项目基于 MIT License 开源。详见 [LICENSE](LICENSE) 文件。
 
 ### 作者
 
-**ABaLaQiYaShanMai**
+**ABaLaQiYaShanMaiI**
 
 ### 更新日志
 
@@ -352,11 +352,11 @@ Issues and Pull Requests are welcome!
 
 ### License
 
-[Specify the license according to your project requirements, e.g., MIT, Apache 2.0, etc.]
+This project is open-sourced under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ### Author
 
-**ABaLaQiYaShanMai**
+**ABaLaQiYaShanMaiI**
 
 ### Changelog
 
